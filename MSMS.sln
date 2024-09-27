@@ -3,7 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSMS.Web", "MSMS.Web\MSMS.Web.csproj", "{FCF34AFF-2BF5-4501-B76D-EE919C12633A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSMS.Web", "MSMS.Web\MSMS.Web.csproj", "{FCF34AFF-2BF5-4501-B76D-EE919C12633A}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSMS.Infrastructure", "MSMS.Infrastructure\MSMS.Infrastructure.csproj", "{A350C91D-A885-4A16-B44B-764D2111D16A}"
 EndProject
 Global
@@ -16,6 +17,14 @@ Global
 		{FCF34AFF-2BF5-4501-B76D-EE919C12633A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCF34AFF-2BF5-4501-B76D-EE919C12633A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCF34AFF-2BF5-4501-B76D-EE919C12633A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E29CDE7-2BFA-448C-8A1E-8D949F5892B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E29CDE7-2BFA-448C-8A1E-8D949F5892B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E29CDE7-2BFA-448C-8A1E-8D949F5892B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E29CDE7-2BFA-448C-8A1E-8D949F5892B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A350C91D-A885-4A16-B44B-764D2111D16A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A350C91D-A885-4A16-B44B-764D2111D16A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A350C91D-A885-4A16-B44B-764D2111D16A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A350C91D-A885-4A16-B44B-764D2111D16A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
