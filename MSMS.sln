@@ -4,6 +4,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSMS.Web", "MSMS.Web\MSMS.Web.csproj", "{FCF34AFF-2BF5-4501-B76D-EE919C12633A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSMS.Infrastructure", "MSMS.Infrastructure\MSMS.Infrastructure.csproj", "{A350C91D-A885-4A16-B44B-764D2111D16A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
