@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MSMS.Core\MSMS.Core.csproj" />
     <ProjectReference Include="..\MSMS.Infrastructure\MSMS.Infrastructure.csproj" />
   </ItemGroup>
 
