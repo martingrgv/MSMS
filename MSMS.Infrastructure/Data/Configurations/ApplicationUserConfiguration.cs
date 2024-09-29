@@ -14,6 +14,11 @@ namespace MSMS.Infrastructure.Data.Configurations
             builder.Property(x => x.NormalizedUserName).HasMaxLength(USERNAME_MAX_LENGTH);
             builder.Property(x => x.Email).IsRequired();
             builder.Property(x => x.PasswordHash).IsRequired();
+
+            //DbSeeder seeder = new DbSeeder();
+            //seeder.SeedUsers();
+
+            //builder.HasData(seeder.GuestUser);
         }
     }
 }
