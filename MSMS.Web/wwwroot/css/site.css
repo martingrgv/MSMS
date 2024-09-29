@@ -64,6 +64,9 @@ body {
 }
 
 .display-2 {
+    font-size: calc(2.5rem + 2vw)
+}
+
 .display-3 {
     font-size: calc(1.475rem + 1.5vw)
 }
@@ -99,6 +102,13 @@ body {
 
 .btn:hover {
     color: #FFFFFF;
+    background-color: #172E11;
+}
+
+.btn-check:active+.btn-primary, .btn-check:checked+.btn-primary, .btn-primary.active, .btn-primary:active, .show>.btn-primary.dropdown-toggle, .btn-check:focus+.btn-primary, .btn-primary:focus, .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    background-color: #367723;
+    border: none;
+    box-shadow: none;
 }
 
 .btn-lg {
@@ -113,3 +123,85 @@ body {
 .btn-primary:hover {
     background-color: #172E11;
 }
+
+.btn-add  {
+    position: fixed;
+    top: calc(9rem + 1.5vw);
+    right: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 20pt;
+    font-weight: bold;
+    text-decoration: none;
+    color: #ffffff;
+    cursor: default;
+}
+
+.btn-add::after {
+    content: '';
+    position: absolute;
+    top: 2.5rem;
+    left: 0;
+    width: 100%;
+    height: 0.25rem;
+    background: #262423;
+}
+
+.btn-add:hover {
+    color: #ababab;
+    cursor: pointer;
+}
+
+.card {
+    width: 20rem;
+    border: none;
+    border-radius: 0;
+    background-color: #171615;
+}
+
+.card::after {
+    content: '';
+    position: absolute;
+    top: 36.5rem;
+    left: 0;
+    width: 100%;
+    height: 0.25rem;
+    background: #262423;
+}
+
+.card-img-top {
+    width: 25rem;
+    height: 25rem;
+    object-fit: cover;
+}
+
+.card-body {
+    flex: auto;
+    font-family: 'Inknut Antiqua';
+    padding: 1rem 0;
+}
+
+.card-body h5{
+    font-size: 14pt;
+    font-weight: lighter;
+}
+
+.card-body p {
+    color: #6B6562;
+    font-size: 11pt;
+    margin: 0
+}
+
+.card-body a {
+    font-family: 'Koulen';
+    letter-spacing: 0.12rem;
+    margin: 1rem 0;
+}
+
+.card .btn {
+    padding: .575rem 2.5rem;
+}
+
