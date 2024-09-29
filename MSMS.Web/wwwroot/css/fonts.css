@@ -1,0 +1,48 @@
+﻿@font-face {
+    font-family: 'VT323';
+    src: url('/fonts/VT323-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inder';
+    src: url('/fonts/Inder-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inknut Antiqua';
+    src: url('/fonts/InknutAntiqua-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inknut Antiqua';
+    src: url('/fonts/InknutAntiqua-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inknut Antiqua';
+    src: url('/fonts/InknutAntiqua-ExtraBold.ttf') format('truetype');
+    font-weight: bolder;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inknut Antiqua';
+    src: url('/fonts/InknutAntiqua-Light.ttf') format('truetype');
+    font-weight: lighter;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inknut Antiqua';
+    src: url('/fonts/InknutAntiqua-Medium.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}

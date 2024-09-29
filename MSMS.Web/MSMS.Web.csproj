@@ -21,4 +21,8 @@
     <ProjectReference Include="..\MSMS.Infrastructure\MSMS.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\fonts\" />
+  </ItemGroup>
+
 </Project>
