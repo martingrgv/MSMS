@@ -12,11 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MSMS.Infrastructure.Migrations
 {
     [DbContext(typeof(MSMSDbContext))]
-<<<<<<<< HEAD:MSMS.Infrastructure/Migrations/20240927214418_InitialCreate.Designer.cs
-    [Migration("20240927214418_InitialCreate")]
-========
-    [Migration("20240929231304_InitialCreate")]
->>>>>>>> 80a62d2 (Data-Layer: final fix for initial create no seed):MSMS.Infrastructure/Migrations/20240929231304_InitialCreate.Designer.cs
+    [Migration("20240929231953_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -57,8 +53,8 @@ namespace MSMS.Infrastructure.Migrations
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(2)
-                        .HasColumnType("nvarchar(2)")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasComment("User's last name");
 
                     b.Property<bool>("LockoutEnabled")

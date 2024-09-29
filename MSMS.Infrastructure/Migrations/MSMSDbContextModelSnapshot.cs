@@ -50,8 +50,8 @@ namespace MSMS.Infrastructure.Migrations
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(2)
-                        .HasColumnType("nvarchar(2)")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasComment("User's last name");
 
                     b.Property<bool>("LockoutEnabled")

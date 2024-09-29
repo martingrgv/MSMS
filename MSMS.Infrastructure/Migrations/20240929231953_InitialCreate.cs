@@ -31,7 +31,7 @@ namespace MSMS.Infrastructure.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "User's first name"),
-                    LastName = table.Column<string>(type: "nvarchar(2)", maxLength: 2, nullable: false, comment: "User's last name"),
+                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "User's last name"),
                     UserName = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),

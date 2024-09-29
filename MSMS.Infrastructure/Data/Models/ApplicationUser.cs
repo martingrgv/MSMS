@@ -13,7 +13,7 @@ namespace MSMS.Infrastructure.Data.Models
         public string FirstName { get; set; } = null!;
 
         [Required]
-        [MaxLength(LASTNAME_MIN_LENGTH)]
+        [MaxLength(LASTNAME_MAX_LENGTH)]
         [Comment("User's last name")]
         public string LastName { get; set; } = null!;
     }
