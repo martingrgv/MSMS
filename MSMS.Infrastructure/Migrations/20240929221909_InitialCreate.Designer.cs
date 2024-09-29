@@ -4,6 +4,7 @@ using MSMS.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MSMS.Infrastructure.Migrations
 {
     [DbContext(typeof(MSMSDbContext))]
-    partial class MSMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240929221909_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,7 +109,7 @@ namespace MSMS.Infrastructure.Migrations
                         {
                             Id = "cbfa3e55-e978-423e-afd2-2aaf4424d83d",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0ce58049-466e-4840-b621-6b00d0d95d1f",
+                            ConcurrencyStamp = "2311ef1b-a3e8-4f1d-8a49-90262d057def",
                             Email = "guest@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Piotr",
@@ -114,9 +117,9 @@ namespace MSMS.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "GUEST@MAIL.COM",
                             NormalizedUserName = "PIOTRDNAMASTER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAd8c6K4Xa0Mf9fV9mA5jnc4WdKJEF9DqN+PUqrMFtAWpitZxjK4wxClhuFsWvRSSg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGEv5CophZedSp0+/vkEVMFyHvSy1j/vXi5lX8n5pz8jjqzTWC/RLhu35dP8m+wlYw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5f04ac01-2a15-4ea5-b1dc-dcd5970a3866",
+                            SecurityStamp = "f9496758-93be-458c-be39-2c4b04f3de5d",
                             TwoFactorEnabled = false,
                             UserName = "PiotrDNAMaster"
                         });
