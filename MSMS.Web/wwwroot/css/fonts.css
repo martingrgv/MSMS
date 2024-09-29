@@ -46,3 +46,10 @@
     font-weight: 400;
     font-style: normal;
 }
+
+@font-face {
+    font-family: 'Inknut Antiqua';
+    src: url('/fonts/InknutAntiqua-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
