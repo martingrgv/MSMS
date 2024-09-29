@@ -1,4 +1,7 @@
 using MSMS.Web.Extensions;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using MSMS.Infrastructure.Data;
 
 namespace MSMS.Web
 {
