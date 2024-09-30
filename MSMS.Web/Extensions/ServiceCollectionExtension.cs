@@ -18,6 +18,7 @@ namespace MSMS.Web.Extensions
             serviceCollection.AddAutoMapper(typeof(ServerProfile).Assembly);
             serviceCollection.AddScoped<IServerService, ServerService>();
 
+            serviceCollection.AddScoped<IRepository, Repository>();
             return serviceCollection;
         }
 
