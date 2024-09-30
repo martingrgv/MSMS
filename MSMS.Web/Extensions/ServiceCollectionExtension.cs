@@ -9,14 +9,16 @@ namespace MSMS.Web.Extensions
     {
         public static IServiceCollection AddServices(this IServiceCollection serviceCollection)
         {
+            serviceCollection.AddScoped<IRepository, Repository>();
             return serviceCollection;
         }
 
         public static IServiceCollection AddDbContext(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("MSMSConnectionString");
+            string connectionString = configuration.GetConnectionString("MSMSConnectionString");
+            string macConnectionString = configuration.GetConnectionString("MSMSMacConnectionString");
             serviceCollection.AddDbContext<MSMSDbContext>(options =>
-                options.UseSqlServer(connectionString));
+                options.UseSqlServer(macConnectionString));
 
             return serviceCollection;
         }

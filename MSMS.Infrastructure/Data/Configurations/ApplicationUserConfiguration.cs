@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MSMS.Infrastructure.Data.Models;
-using static MSMS.Infrastructure.ValidationConstants;
+using static MSMS.Infrastructure.Constants.ValidationConstants;
 
 namespace MSMS.Infrastructure.Data.Configurations
 {
