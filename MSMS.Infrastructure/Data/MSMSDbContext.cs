@@ -10,11 +10,16 @@ namespace MSMS.Infrastructure.Data
     {
         public MSMSDbContext(DbContextOptions options) : base(options) { }
 
+        public DbSet<Server> Servers { get; set; } = null!;
+        public DbSet<World> World { get; set; } = null!;
+        public DbSet<Location> Locations { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
             builder.ApplyConfiguration(new ApplicationUserConfiguration());
+            builder.ApplyConfiguration(new LocationConfiguration());
         }
     }
 }
