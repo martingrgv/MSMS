@@ -14,9 +14,10 @@ namespace MSMS.Web.Extensions
 
         public static IServiceCollection AddDbContext(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("MSMSConnectionString");
+            string connectionString = configuration.GetConnectionString("MSMSConnectionString");
+            string macConnectionString = configuration.GetConnectionString("MSMSMacConnectionString");
             serviceCollection.AddDbContext<MSMSDbContext>(options =>
-                options.UseSqlServer(connectionString));
+                options.UseSqlServer(macConnectionString));
 
             return serviceCollection;
         }
