@@ -18,7 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using MSMS.Infrastructure;
+using MSMS.Infrastructure.Constants;
 using MSMS.Infrastructure.Data.Models;
 
 namespace MSMS.Web.Areas.Identity.Pages.Account

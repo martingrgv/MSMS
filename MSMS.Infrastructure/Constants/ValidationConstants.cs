@@ -1,4 +1,4 @@
-﻿namespace MSMS.Infrastructure
+﻿namespace MSMS.Infrastructure.Constants
 {
     public static class ValidationConstants
     {

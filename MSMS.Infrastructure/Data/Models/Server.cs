@@ -1,7 +1,7 @@
 ﻿using MSMS.Infrastructure.Data.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static MSMS.Infrastructure.ValidationConstants;
+using static MSMS.Infrastructure.Constants.ValidationConstants;
 
 namespace MSMS.Infrastructure.Data.Models
 {

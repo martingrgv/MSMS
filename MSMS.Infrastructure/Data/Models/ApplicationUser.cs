@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using static MSMS.Infrastructure.ValidationConstants;
+using static MSMS.Infrastructure.Constants.ValidationConstants;
 
 namespace MSMS.Infrastructure.Data.Models
 {
