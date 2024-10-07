@@ -9,6 +9,7 @@ namespace MSMS.Web.Extensions
     {
         public static IServiceCollection AddServices(this IServiceCollection serviceCollection)
         {
+            serviceCollection.AddScoped<IRepository, Repository>();
             return serviceCollection;
         }
 
