@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using MSMS.Core.Contracts;
+using MSMS.Core.Profiles;
 using MSMS.Core.Services;
 using MSMS.Infrastructure.Data;
 using MSMS.Infrastructure.Data.Models;
+using MSMS.Infrastructure.Common;
 
 namespace MSMS.Web.Extensions
 {
@@ -12,6 +15,7 @@ namespace MSMS.Web.Extensions
         public static IServiceCollection AddServices(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped<IRepository, Repository>();
+            serviceCollection.AddAutoMapper(typeof(ServerProfile).Assembly);
             serviceCollection.AddScoped<IServerService, ServerService>();
 
             return serviceCollection;
@@ -20,9 +24,10 @@ namespace MSMS.Web.Extensions
         public static IServiceCollection AddDbContext(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
             string connectionString = configuration.GetConnectionString("MSMSConnectionString");
-            string macConnectionString = configuration.GetConnectionString("MSMSMacConnectionString");
             serviceCollection.AddDbContext<MSMSDbContext>(options =>
-                options.UseSqlServer(macConnectionString));
+            {
+                options.UseSqlServer(connectionString);
+            });
 
             return serviceCollection;
         }

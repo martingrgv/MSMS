@@ -6,6 +6,16 @@ namespace MSMS.Infrastructure.Data.Models
 {
     public class World
     {
+        public World(WorldType worldType)
+        {
+            if (worldType == WorldType.Overworld) ImagePath = "/images/world/overworld.jpg";
+            else if (worldType == WorldType.Nether) ImagePath = "/images/world/nether.jpg";
+            else if (worldType == WorldType.End) ImagePath = "/images/world/end.jpg";
+            else throw new ArgumentException("Invalid world type!");
+
+            WorldType = worldType;
+        }
+
         [Key]
         public int Id { get; set; }
 
