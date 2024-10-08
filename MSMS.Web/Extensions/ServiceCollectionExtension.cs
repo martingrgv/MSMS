@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MSMS.Core.Contracts;
+using MSMS.Core.Services;
 using MSMS.Infrastructure.Data;
 using MSMS.Infrastructure.Data.Models;
 
@@ -10,6 +12,8 @@ namespace MSMS.Web.Extensions
         public static IServiceCollection AddServices(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped<IRepository, Repository>();
+            serviceCollection.AddScoped<IServerService, ServerService>();
+
             return serviceCollection;
         }
 
