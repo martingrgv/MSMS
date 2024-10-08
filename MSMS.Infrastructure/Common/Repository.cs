@@ -29,17 +29,15 @@ namespace MSMS.Infrastructure.Common
             DbSet<TEntity>().AddRange(entities);
         }
 
-        public ICollection<TEntity> All<TEntity>() where TEntity : class
+        public IQueryable<TEntity> All<TEntity>() where TEntity : class
         {
-            return DbSet<TEntity>()
-                .ToList();
+            return DbSet<TEntity>();
         }
 
-        public IEnumerable<TEntity> AllReadOnly<TEntity>() where TEntity : class
+        public IQueryable<TEntity> AllReadOnly<TEntity>() where TEntity : class
         {
             return DbSet<TEntity>()
-                .AsNoTracking()
-                .ToList();
+                .AsNoTracking();
         }
 
         public TEntity? GetById<TEntity>(int id) where TEntity : class
