@@ -10,16 +10,6 @@ namespace MSMS.Core.Profiles
         public ServerProfile()
         {
             CreateMap<ServerFormModel, Server>();   
-            CreateMap<Server, ServerViewModel>()
-                .ForMember(dest => dest.OwnerName, opt => 
-                    opt.MapFrom(src => src.Owner.UserName))   
-                .ForMember(dest => dest.ImagePath, opt =>
-                    opt.MapFrom(src => src.ImagePath.Replace(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"), "")));
-            CreateMap<Server, ServerDetailsViewModel>()
-                .ForMember(dest => dest.OwnerName, opt => 
-                    opt.MapFrom(src => src.Owner.UserName))   
-                .ForMember(dest => dest.ImagePath, opt =>
-                    opt.MapFrom(src => src.ImagePath.Replace(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"), "")));
         }
     }
 }
