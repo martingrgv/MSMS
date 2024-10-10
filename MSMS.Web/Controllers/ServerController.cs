@@ -37,23 +37,41 @@ namespace MSMS.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(ServerFormModel model, IFormFile serverImage)
+        public IActionResult Create(ServerFormModel model, IFormFile? serverImage)
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                ModelState.AddModelError(nameof(model.IpAddress), "Invalid server data.");
+                return View();
             }
+
+            if (_serverService.ExistsByIp(model.IpAddress))
+            {
+                ModelState.AddModelError(nameof(model.IpAddress), "Server with this IP address already exists.");
+                return View();
+            }
+
+            var imagePath = Path.Combine(
+                Directory.GetCurrentDirectory(),
+                "wwwroot",
+                "images",
+                "server-banners",
+                "default.jpeg");
 
             if (serverImage != null && serverImage.Length > 0)
             {
-                var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "servers", serverImage.FileName);
-                using (var stream = new FileStream(imagePath, FileMode.Create))
-                {
-                    serverImage.CopyTo(stream);
-                }
+                imagePath = Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                    "wwwroot",
+                    "images",
+                    "server-banners",
+                    Guid.NewGuid().ToString() + Path.GetExtension(serverImage.FileName));
 
-                _serverService.CreateServer(model, imagePath, User.Id());
+                using (var stream = new FileStream(imagePath, FileMode.Create, FileAccess.Write))
+                    serverImage.CopyTo(stream);
             }
+
+            _serverService.CreateServer(model, imagePath, User.Id());
 
             return RedirectToAction(nameof(All));
         }

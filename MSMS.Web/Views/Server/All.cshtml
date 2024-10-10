@@ -4,30 +4,33 @@
     ViewBag.Title = "Servers";
 }
 
+<div class="container mt-5">
+
 @if (Model.Count() == 0)
 {
-	<h2>No servers yet!</h2>
+	<h1 class="display-2 text-center text-blocky">NO SERVER YET</h1>
+	<h4 class="display-4 text-center text-blocky">YOU CAN CREATE ONE YOURSELF</h4>
 }
 else
 {
+	<h1 class="display-2 text-center text-blocky">SERVERS</h1>
+	<div class="row mt-5 justify-content-center">
 	@foreach (var server in Model)
 	{
-		<div class="container mt-5">
-			<h1 class="display-2 text-center text-blocky">SERVERS</h1>
-			<div class="row mt-5 justify-content-center">
-				<div class="col-md-4 mb-5">
-					<div class="card" style="width: 100%;">
-						<img class="card-img-top" src="@server.ImagePath" alt="Server banner">
-						<div class="card-body">
-							<h5 class="card-title">@server.Name</h5>
-							<p class="card-text">IP: @server.IpAddress</p>
-							<p>Owner: @server.OwnerName</p>
-							<a href="#" class="btn btn-primary">DETAILS</a>
-						</div>
-					</div>
+		<div class="col-md-4 mb-5">
+			<div class="card" style="width: 100%;">
+				<img class="card-img-top" src="@server.ImagePath" alt="Server banner">
+				<div class="card-body">
+					<h5 class="card-title">@server.Name</h5>
+					<p class="card-text">IP: @server.IpAddress</p>
+					<p>Owner: @server.OwnerName</p>
+					<a href="#" class="btn btn-primary">DETAILS</a>
 				</div>
 			</div>
 		</div>
 	}
+		</div>
 }
+</div>
+
 <a href="/Server/Create" class="btn-add">+</a>
