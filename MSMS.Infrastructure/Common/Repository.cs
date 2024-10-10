@@ -1,76 +1,68 @@
+using System.Data.Common;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using MSMS.Infrastructure.Data;
-using System.Linq.Expressions;
 
 namespace MSMS.Infrastructure.Common
 {
-	public class Repository : IRepository
-	{
-		private MSMSDbContext _context;
+    public class Repository : IRepository
+    {
+        private MSMSDbContext _context;
 
-		public Repository(MSMSDbContext context)
-		{
-			_context = context;
-		}
-		public async Task LoadReferenceAsync<TEntity, TProperty>(TEntity entity, Expression<Func<TEntity,TProperty?>> property) where TEntity: class where TProperty : class
-		{
-			var entry = _context.Entry(entity);
+        public Repository(MSMSDbContext context)
+        {
+            _context = context;
+        }
 
-			if (entry.Reference(property).IsLoaded == false)
-			{
-				await entry.Reference(property).LoadAsync();
-			}
-		}
+        private DbSet<TEntity> DbSet<TEntity>() where TEntity : class
+        {
+            return _context.Set<TEntity>();
+        }
 
-		public async Task AddAsync<TEntity>(TEntity entity) where TEntity : class
-		{
-			await DbSet<TEntity>().AddAsync(entity);
-		}
+        public void Add<TEntity>(TEntity entity) where TEntity : class
+        {
+            DbSet<TEntity>().Add(entity);
+        }
 
-		public Task AddRangeAsync<TEntity>(List<TEntity> entities) where TEntity : class
-		{
-			return DbSet<TEntity>().AddRangeAsync(entities);
-		}
+        public void AddRange<TEntity>(List<TEntity> entities) where TEntity : class
+        {
+            DbSet<TEntity>().AddRange(entities);
+        }
 
-		public IQueryable<TEntity> All<TEntity>() where TEntity : class
-		{
-			return DbSet<TEntity>();
-		}
+        public ICollection<TEntity> All<TEntity>() where TEntity : class
+        {
+            return DbSet<TEntity>()
+                .ToList();
+        }
 
-		public IQueryable<TEntity> AllReadOnly<TEntity>() where TEntity : class
-		{
-			return DbSet<TEntity>()
-				.AsNoTracking();
-		}
+        public IEnumerable<TEntity> AllReadOnly<TEntity>() where TEntity : class
+        {
+            return DbSet<TEntity>()
+                .AsNoTracking()
+                .ToList();
+        }
 
-		public async Task<TEntity?> GetByIdAsync<TEntity>(int id) where TEntity : class
-		{
-			return await DbSet<TEntity>()
-				.FindAsync(id);
-		}
+        public TEntity? GetById<TEntity>(int id) where TEntity : class
+        {
+            return DbSet<TEntity>()
+                .Find(id);
+        }
 
-		public Task RemoveAsync<TEntity>(TEntity entity) where TEntity : class
-		{
-			DbSet<TEntity>()
-				.Remove(entity);
-			return Task.CompletedTask;
-		}
+        public void Remove<TEntity>(TEntity entity) where TEntity : class
+        {
+            DbSet<TEntity>()
+                .Remove(entity);
+        }
 
-		public Task RemoveRangeAsync<TEntity>(ICollection<TEntity> entities) where TEntity : class
-		{
-			DbSet<TEntity>()
-				.RemoveRange(entities);
-			return Task.CompletedTask;
-		}
+        public void RemoveRange<TEntity>(ICollection<TEntity> entities) where TEntity : class
+        {
+            DbSet<TEntity>()
+                .RemoveRange(entities);
+        }
 
-		public Task<int> SaveChangesAsync()
-		{
-			return _context.SaveChangesAsync();
-		}
-
-		private DbSet<TEntity> DbSet<TEntity>() where TEntity : class
-		{
-			return _context.Set<TEntity>();
-		}
-	}
+        int IRepository.SaveChanges()
+        {
+            return _context.SaveChanges();
+        }
+    }
 }

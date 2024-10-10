@@ -7,16 +7,16 @@
 <div class="container mt-5">
     <h1 class="display-2 text-center text-blocky">CREATE SERVER</h1>
 
-    <form asp-action="Create" asp-controller="Server" method="post" class="mt-4">
+    <form asp-action="Create" asp-controller="Server" method="post" enctype="multipart/form-data" class="mt-4">
         <div class="form-group">
-            <label asp-for="@Model.ServerName" class="control-label"></label>
-            <input asp-for="@Model.ServerName" class="form-control" />
-            <span asp-validation-for="@Model.ServerName" class="text-danger"></span>
+            <label asp-for="@Model.Name" class="control-label"></label>
+            <input asp-for="@Model.Name" class="form-control" />
+            <span asp-validation-for="@Model.Name" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="@Model.ServerIp" class="control-label"></label>
-            <input asp-for="@Model.ServerIp" class="form-control" />
-            <span asp-validation-for="@Model.ServerIp" class="text-danger"></span>
+            <label asp-for="@Model.IpAddress" class="control-label"></label>
+            <input asp-for="@Model.IpAddress" class="form-control" />
+            <span asp-validation-for="@Model.IpAddress" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="@Model.GameVersion" class="control-label"></label>
@@ -29,12 +29,13 @@
             <span asp-validation-for="@Model.PlayMode" class="text-danger"></span>
         </div>
         <div class="form-group">
-    using MSMS.Core.Models;
             <label asp-for="@Model.Description" class="control-label"></label>
             <textarea asp-for="@Model.Description" class="form-control"></textarea>
             <span asp-validation-for="@Model.Description" class="text-danger"></span>
         </div>
-    using Microsoft.CodeAnalysis.Scripting;
+        <div class="form-group">
+            <input id="serverImage" name="serverImage" type="file" />
+        </div>
         <button type="submit" class="btn btn-primary">Create</button>
     </form>
 </div>

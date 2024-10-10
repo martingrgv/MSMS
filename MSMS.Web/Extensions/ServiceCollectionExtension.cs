@@ -6,6 +6,7 @@ using MSMS.Core.Profiles;
 using MSMS.Core.Services;
 using MSMS.Infrastructure.Data;
 using MSMS.Infrastructure.Data.Models;
+using MSMS.Infrastructure.Common;
 
 namespace MSMS.Web.Extensions
 {
@@ -23,9 +24,10 @@ namespace MSMS.Web.Extensions
         public static IServiceCollection AddDbContext(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
             string connectionString = configuration.GetConnectionString("MSMSConnectionString");
-            string macConnectionString = configuration.GetConnectionString("MSMSMacConnectionString");
             serviceCollection.AddDbContext<MSMSDbContext>(options =>
-                options.UseSqlServer(macConnectionString));
+            {
+                options.UseSqlServer(connectionString);
+            });
 
             return serviceCollection;
         }
