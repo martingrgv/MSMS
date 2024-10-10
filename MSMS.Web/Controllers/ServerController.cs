@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MSMS.Core.Contracts;
 using MSMS.Core.Models;
+using System.Security.Claims;
 
 namespace MSMS.Web.Controllers
 {
@@ -18,7 +19,8 @@ namespace MSMS.Web.Controllers
         [AllowAnonymous]
         public IActionResult All()
         {
-            return View();
+            var models = _serverService.AllServers();
+            return View(models);
         }
 
         [HttpGet]
@@ -31,18 +33,27 @@ namespace MSMS.Web.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            return View(new ServerFormModel());
         }
 
         [HttpPost]
-        public IActionResult Create(ServerFormModel model)
+        public IActionResult Create(ServerFormModel model, IFormFile serverImage)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            _serverService.CreateServer(model);
+            if (serverImage != null && serverImage.Length > 0)
+            {
+                var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "servers", serverImage.FileName);
+                using (var stream = new FileStream(imagePath, FileMode.Create))
+                {
+                    serverImage.CopyTo(stream);
+                }
+
+                _serverService.CreateServer(model, imagePath, User.Id());
+            }
 
             return RedirectToAction(nameof(All));
         }
