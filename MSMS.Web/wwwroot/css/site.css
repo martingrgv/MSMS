@@ -27,7 +27,7 @@ body {
 }
 
 .bg-image {
-    background-image: linear-gradient(rgba(0, 0, 0, .8), rgba(0, 0, 0, .8)), url('/images/wallpaper_minecraft_pc_bundle_1920x1080.png');
+    background-image: linear-gradient(rgba(0, 0, 0, .8), rgba(0, 0, 0, .8)), url('/images/background.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
