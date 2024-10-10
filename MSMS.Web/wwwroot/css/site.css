@@ -53,6 +53,7 @@ body {
     font-size: 2.2rem;
     /*font-family: 'Inknut Antiqua';*/
     letter-spacing: 0.2rem;
+    margin-left: 2rem;
 }
 
 .nav-link {
