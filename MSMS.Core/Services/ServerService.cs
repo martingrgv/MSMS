@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MSMS.Core.Contracts;
 using MSMS.Core.Models;
 using MSMS.Infrastructure.Common;
@@ -21,7 +22,10 @@ namespace MSMS.Core.Services
 
         public IEnumerable<ServerViewModel> AllServers()
         {
-            return new List<ServerViewModel>();
+            return _mapper.Map<IEnumerable<ServerViewModel>>(_repository.All<Server>()
+                .Include(s => s.Worlds)
+                .Include(s => s.Owner)
+                .ToList());
         }
 
         public void CreateServer(ServerFormModel model, string serverImagePath, string ownerId)
@@ -38,6 +42,12 @@ namespace MSMS.Core.Services
 
             _repository.Add(entity);
             _repository.SaveChanges();
+        }
+
+        public bool ExistsByIp(string ip)
+        {
+            return _repository.AllReadOnly<Server>()
+                .Any(s => s.IpAddress == ip);
         }
     }
 }

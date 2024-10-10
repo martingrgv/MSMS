@@ -6,5 +6,6 @@ namespace MSMS.Core.Contracts
     {
         public IEnumerable<ServerViewModel> AllServers();
         public void CreateServer(ServerFormModel model, string serverImagePath, string ownerId);
+        public bool ExistsByIp(string ip);
     }
 }
