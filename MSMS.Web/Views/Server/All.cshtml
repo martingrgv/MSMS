@@ -24,7 +24,7 @@ else
 					<h5 class="card-title">@server.Name</h5>
 					<p class="card-text">IP: @server.IpAddress</p>
 					<p>Owner: @server.OwnerName</p>
-					<a href="#" class="btn btn-primary">DETAILS</a>
+					<a asp-controller="Server" asp-action="Details" asp-route-id="@server.Id" class="btn btn-primary">DETAILS</a>
 				</div>
 			</div>
 		</div>
