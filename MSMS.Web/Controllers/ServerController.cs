@@ -25,8 +25,9 @@ namespace MSMS.Web.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Details([FromRoute] int id)
+        public async Task<IActionResult> Details([FromRoute] int id)
         {
+            var model = await _serverService.GetServerDetailsAsync(id);
             return View();
         }
 
