@@ -1,4 +1,5 @@
 using System;
+using System.Linq.Expressions;
 
 namespace MSMS.Infrastructure.Common
 {
@@ -12,5 +13,7 @@ namespace MSMS.Infrastructure.Common
         Task RemoveAsync<TEntity>(TEntity entity) where TEntity : class;
         Task RemoveRangeAsync<TEntity>(ICollection<TEntity> entities) where TEntity : class;
         Task<int> SaveChangesAsync();
+        Task LoadReferenceAsync<TEntity, TProperty>(TEntity entity, Expression<Func<TEntity, TProperty?>> property) where TEntity : class where TProperty : class;
+
     }
 }
