@@ -23,11 +23,12 @@ namespace MSMS.Web.Extensions
 
         public static IServiceCollection AddDbContext(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
-            string connectionString = configuration.GetConnectionString("MSMSConnectionString");
+            string connectionString = configuration.GetConnectionString("MSMSConnectionString") ?? throw new InvalidOperationException("Could not find connection string!");
             serviceCollection.AddDbContext<MSMSDbContext>(options =>
             {
                 options.UseSqlServer(connectionString);
             });
+            serviceCollection.AddDatabaseDeveloperPageExceptionFilter();
 
             return serviceCollection;
         }

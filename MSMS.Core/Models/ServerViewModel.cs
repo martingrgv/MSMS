@@ -4,6 +4,7 @@ namespace MSMS.Core.Models
 {
     public class ServerViewModel
     {
+        public int Id { get; set; }
         public string Name { get; set; } = null!;
         public string ImagePath { get; set; } = null!;
         public string IpAddress { get; set; } = null!;
