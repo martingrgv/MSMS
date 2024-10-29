@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MSMS.Infrastructure.Data;
+using System.Linq.Expressions;
 
 namespace MSMS.Infrastructure.Common
 {
@@ -10,6 +11,15 @@ namespace MSMS.Infrastructure.Common
 		public Repository(MSMSDbContext context)
 		{
 			_context = context;
+		}
+		public async Task LoadReferenceAsync<TEntity, TProperty>(TEntity entity, Expression<Func<TEntity,TProperty?>> property) where TEntity: class where TProperty : class
+		{
+			var entry = _context.Entry(entity);
+
+			if (entry.Reference(property).IsLoaded == false)
+			{
+				await entry.Reference(property).LoadAsync();
+			}
 		}
 
 		public async Task AddAsync<TEntity>(TEntity entity) where TEntity : class
