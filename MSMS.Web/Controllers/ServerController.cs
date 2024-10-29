@@ -17,9 +17,9 @@ namespace MSMS.Web.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult All()
+        public async Task<IActionResult> All()
         {
-            var models = _serverService.AllServers();
+            var models = await _serverService.AllServersAsync();
             return View(models);
         }
 
@@ -37,7 +37,7 @@ namespace MSMS.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(ServerFormModel model, IFormFile? serverImage)
+        public async Task<IActionResult> Create(ServerFormModel model, IFormFile? serverImage)
         {
             if (!ModelState.IsValid)
             {
@@ -45,7 +45,7 @@ namespace MSMS.Web.Controllers
                 return View();
             }
 
-            if (_serverService.ExistsByIp(model.IpAddress))
+            if (await _serverService.IpExistsAsync(model.IpAddress))
             {
                 ModelState.AddModelError(nameof(model.IpAddress), "Server with this IP address already exists.");
                 return View();
@@ -71,8 +71,7 @@ namespace MSMS.Web.Controllers
                     serverImage.CopyTo(stream);
             }
 
-            _serverService.CreateServer(model, imagePath, User.Id());
-
+            await _serverService.CreateServerAsync(model, imagePath, User.Id());
             return RedirectToAction(nameof(All));
         }
     }

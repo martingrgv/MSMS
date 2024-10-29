@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using MSMS.Core.Contracts;
 using MSMS.Core.Models;
 using MSMS.Infrastructure.Common;
-using MSMS.Infrastructure.Data;
 using MSMS.Infrastructure.Data.Enums;
 using MSMS.Infrastructure.Data.Models;
 
@@ -20,15 +19,19 @@ namespace MSMS.Core.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<ServerViewModel> AllServers()
+        public async Task<IEnumerable<ServerViewModel>> AllServersAsync()
         {
-            return _mapper.Map<IEnumerable<ServerViewModel>>(_repository.All<Server>()
+            var servers = await _repository
+                .All<Server>()
                 .Include(s => s.Worlds)
                 .Include(s => s.Owner)
-                .ToList());
+                .ToListAsync();
+
+            var mappedModel = _mapper.Map<IEnumerable<ServerViewModel>>(servers);
+            return mappedModel;
         }
 
-        public void CreateServer(ServerFormModel model, string serverImagePath, string ownerId)
+        public async Task CreateServerAsync(ServerFormModel model, string serverImagePath, string ownerId)
         {
             Server entity = _mapper.Map<Server>(model);
             entity.ImagePath = serverImagePath;
@@ -40,14 +43,15 @@ namespace MSMS.Core.Services
                 new World(WorldType.End) 
             ];
 
-            _repository.Add(entity);
-            _repository.SaveChanges();
+            await _repository.AddAsync(entity);
+            await _repository.SaveChangesAsync();
         }
 
-        public bool ExistsByIp(string ip)
+        public async Task<bool> IpExistsAsync(string ip)
         {
-            return _repository.AllReadOnly<Server>()
-                .Any(s => s.IpAddress == ip);
+            return await _repository
+                .AllReadOnly<Server>()
+                .AnyAsync(s => s.IpAddress == ip);
         }
     }
 }

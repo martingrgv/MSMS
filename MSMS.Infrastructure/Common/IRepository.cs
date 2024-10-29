@@ -6,11 +6,11 @@ namespace MSMS.Infrastructure.Common
     {
         IQueryable<TEntity> All<TEntity>() where TEntity : class;
         IQueryable<TEntity> AllReadOnly<TEntity>() where TEntity : class;
-        void Add<TEntity>(TEntity entity) where TEntity : class;
-        void AddRange<TEntity>(List<TEntity> entities) where TEntity : class;
-        TEntity? GetById<TEntity>(int id) where TEntity : class;
-        void Remove<TEntity>(TEntity entity) where TEntity : class;
-        void RemoveRange<TEntity>(ICollection<TEntity> entities) where TEntity : class;
-        int SaveChanges();
+        Task AddAsync<TEntity>(TEntity entity) where TEntity : class;
+        Task AddRangeAsync<TEntity>(List<TEntity> entities) where TEntity : class;
+        Task <TEntity?> GetByIdAsync<TEntity>(int id) where TEntity : class;
+        Task RemoveAsync<TEntity>(TEntity entity) where TEntity : class;
+        Task RemoveRangeAsync<TEntity>(ICollection<TEntity> entities) where TEntity : class;
+        Task<int> SaveChangesAsync();
     }
 }
