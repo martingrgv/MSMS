@@ -8,7 +8,7 @@ using MSMS.Infrastructure.Data.Models;
 
 namespace MSMS.Core.Services
 {
-    public class ServerService : IServerService
+	public class ServerService : IServerService
     {
         private IRepository _repository;
         private IMapper _mapper;
@@ -47,7 +47,16 @@ namespace MSMS.Core.Services
             await _repository.SaveChangesAsync();
         }
 
-        public async Task<bool> IpExistsAsync(string ip)
+		public async Task<ServerDetailsViewModel> GetServerDetailsAsync(int serverId)
+		{
+            var server = await _repository.GetByIdAsync<Server>(serverId);
+            await _repository.LoadReferenceAsync(server, s => s.Owner);
+
+            var mappedModel = _mapper.Map<ServerDetailsViewModel>(server);
+            return mappedModel;
+		}
+
+		public async Task<bool> IpExistsAsync(string ip)
         {
             return await _repository
                 .AllReadOnly<Server>()

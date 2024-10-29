@@ -7,5 +7,6 @@ namespace MSMS.Core.Contracts
         public Task<IEnumerable<ServerViewModel>> AllServersAsync();
         public Task CreateServerAsync(ServerFormModel model, string serverImagePath, string ownerId);
         public Task<bool> IpExistsAsync(string ip);
+        public Task<ServerDetailsViewModel> GetServerDetailsAsync(int serverId);
     }
 }
