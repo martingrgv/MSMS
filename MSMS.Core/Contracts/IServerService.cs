@@ -4,8 +4,8 @@ namespace MSMS.Core.Contracts
 {
     public interface IServerService
     {
-        public IEnumerable<ServerViewModel> AllServers();
-        public void CreateServer(ServerFormModel model, string serverImagePath, string ownerId);
-        public bool ExistsByIp(string ip);
+        public Task<IEnumerable<ServerViewModel>> AllServersAsync();
+        public Task CreateServerAsync(ServerFormModel model, string serverImagePath, string ownerId);
+        public Task<bool> IpExistsAsync(string ip);
     }
 }
