@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MSMS.Infrastructure.Data.Models;
+using MSMS.Infrastructure.Data.Seeder;
 
 namespace MSMS.Infrastructure.Data.Configurations
 {
@@ -13,6 +14,8 @@ namespace MSMS.Infrastructure.Data.Configurations
                 .WithMany(w => w.Locations)
                 .HasForeignKey(l => l.WorldId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasData(DbSeeder.SeedLocations());
         }
     }
 }

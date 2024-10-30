@@ -19,6 +19,8 @@ namespace MSMS.Infrastructure.Data
             base.OnModelCreating(builder);
 
             builder.ApplyConfiguration(new ApplicationUserConfiguration());
+            builder.ApplyConfiguration(new ServerConfiguration());
+            builder.ApplyConfiguration(new WorldConfiguration());
             builder.ApplyConfiguration(new LocationConfiguration());
         }
     }
