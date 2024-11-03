@@ -14,6 +14,7 @@ namespace MSMS.Infrastructure.Common
         Task RemoveRangeAsync<TEntity>(ICollection<TEntity> entities) where TEntity : class;
         Task<int> SaveChangesAsync();
         Task LoadReferenceAsync<TEntity, TProperty>(TEntity entity, Expression<Func<TEntity, TProperty?>> property) where TEntity : class where TProperty : class;
+        Task LoadCollectionAsync<TEntity, TProperty>(TEntity entity, Expression<Func<TEntity, IEnumerable<TProperty?>>> property) where TEntity : class where TProperty : class;
 
     }
 }

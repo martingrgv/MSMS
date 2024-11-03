@@ -1,3 +1,22 @@
-﻿@{
+﻿@model ServerDetailsViewModel
+
+@{
     ViewBag.Title = "Server Details";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="banner-container">
+            <img src="@Model.ImagePath" class="banner-image img-fluid w-100" alt="Server banner">
+        </div>
+    </div>
+    <p class="server-name">@Model.Name</p>
+    <p class="text-secondary server-ip">IP: @Model.IpAddress</p>
+    <p class="server-game-version"><span class="text-secondary">Version:</span> @Model.GameVersion</p>
+    <p class="server-owner"><span class="text-secondary">Owner:</span> @Model.OwnerName</p>
+</div>
+
+@foreach (var world in @Model.Worlds)
+{
+    <p>@world.WorldType</p>
 }

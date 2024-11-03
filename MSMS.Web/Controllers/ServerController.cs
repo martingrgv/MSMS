@@ -28,7 +28,7 @@ namespace MSMS.Web.Controllers
         public async Task<IActionResult> Details([FromRoute] int id)
         {
             var model = await _serverService.GetServerDetailsAsync(id);
-            return View();
+            return View(model);
         }
 
         [HttpGet]

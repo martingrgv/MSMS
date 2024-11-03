@@ -72,5 +72,17 @@ namespace MSMS.Infrastructure.Common
 		{
 			return _context.Set<TEntity>();
 		}
-	}
+
+        public async Task LoadCollectionAsync<TEntity, TProperty>(TEntity entity, Expression<Func<TEntity, IEnumerable<TProperty?>>> property)
+            where TEntity : class
+            where TProperty : class
+        {
+			var entry = _context.Entry(entity);
+
+			if (entry.Collection(property).IsLoaded == false)
+			{
+				await entry.Collection(property).LoadAsync();
+			}
+        }
+    }
 }

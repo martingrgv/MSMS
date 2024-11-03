@@ -50,7 +50,14 @@ namespace MSMS.Core.Services
 		public async Task<ServerDetailsViewModel> GetServerDetailsAsync(int serverId)
 		{
             var server = await _repository.GetByIdAsync<Server>(serverId);
+
+            if (server == null)
+            {
+                throw new InvalidOperationException($"No server found by id: {serverId}");
+            }
+
             await _repository.LoadReferenceAsync(server, s => s.Owner);
+            await _repository.LoadCollectionAsync(server, s => s.Worlds);
 
             var mappedModel = _mapper.Map<ServerDetailsViewModel>(server);
             return mappedModel;
