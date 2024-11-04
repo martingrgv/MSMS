@@ -4,7 +4,7 @@
     ViewBag.Title = "Server Details";
 }
 
-<div class="container-fluid">
+<div class="container-fluid mb-5">
     <div class="row">
         <div class="banner-container">
             <img src="@Model.ImagePath" class="banner-image img-fluid w-100" alt="Server banner">
@@ -14,9 +14,18 @@
     <p class="text-secondary server-ip">IP: @Model.IpAddress</p>
     <p class="server-game-version"><span class="text-secondary">Version:</span> @Model.GameVersion</p>
     <p class="server-owner"><span class="text-secondary">Owner:</span> @Model.OwnerName</p>
-</div>
 
-@foreach (var world in @Model.Worlds)
-{
-    <p>@world.WorldType</p>
-}
+    <div class="row justify-content-center mt-5">
+        @foreach (var world in @Model.Worlds)
+        {
+            <div class="col-3">
+                <div class="world-card h-100">
+                    <img src="@world.ImagePath" class="world-card-img-top" alt="World banner">
+                    <div class="card-img-overlay d-flex justify-content-center align-items-center">
+                        <h2 class="text-blocky text-vertical">@world.WorldType</h2>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
