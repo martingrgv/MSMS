@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Humanizer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MSMS.Core.Contracts;
 using MSMS.Core.Models;
+using MSMS.Infrastructure.Data.Enums;
 using System.Security.Claims;
 
 namespace MSMS.Web.Controllers
@@ -27,6 +29,11 @@ namespace MSMS.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Details([FromRoute] int id)
         {
+            if (id == 0)
+            {
+                return BadRequest();
+            }
+
             var model = await _serverService.GetServerDetailsAsync(id);
             return View(model);
         }
@@ -74,6 +81,25 @@ namespace MSMS.Web.Controllers
 
             await _serverService.CreateServerAsync(model, imagePath, User.Id());
             return RedirectToAction(nameof(All));
+        }
+
+        [HttpGet]
+        [Route("Server/{id}/World/{worldType}")]
+        public async Task<IActionResult> World([FromRoute] int id, string worldType)
+        {
+            if (id == 0)
+            {
+                return BadRequest();
+            }
+
+            if (!Enum.TryParse<WorldType>(worldType, true, out var parsedType))
+            {
+                return BadRequest();               
+            }
+
+            var model = await _serverService.GetServerWorldAsync(id, parsedType);
+
+            return View(model);
         }
     }
 }

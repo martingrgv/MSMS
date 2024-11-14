@@ -63,7 +63,26 @@ namespace MSMS.Core.Services
             return mappedModel;
 		}
 
-		public async Task<bool> IpExistsAsync(string ip)
+        public async Task<ServerWorldViewModel> GetServerWorldAsync(int serverId, WorldType worldType)
+        {
+            var server = await _repository.GetByIdAsync<Server>(serverId);
+
+            if (server == null)
+            {
+                throw new InvalidOperationException($"No server found by id: {serverId}");
+            }
+
+            await _repository.LoadReferenceAsync(server, s => s.Owner);
+            await _repository.LoadCollectionAsync(server, s => s.Worlds);
+
+            var world = server.Worlds.FirstOrDefault(w => w.WorldType == worldType);
+            await _repository.LoadCollectionAsync(world, w => w.Locations);
+
+            var mappedModel = _mapper.Map<ServerWorldViewModel>(server);
+            return mappedModel;
+        }
+
+        public async Task<bool> IpExistsAsync(string ip)
         {
             return await _repository
                 .AllReadOnly<Server>()
