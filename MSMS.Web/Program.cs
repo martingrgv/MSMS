@@ -26,6 +26,7 @@ namespace MSMS.Web
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+                app.UseStatusCodePagesWithReExecute("/Home/Error{0}");
                 app.UseHsts();
             }
 
