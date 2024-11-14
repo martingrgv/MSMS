@@ -22,7 +22,7 @@
         @foreach (var world in @Model.Worlds)
         {
             <div class="col-3">
-                <a href="#">
+                <a asp-controller="Server" asp-action="World" asp-route-id="@Model.Id" asp-route-worldType="@world.WorldType">
                     <div class="world-card h-100">
                         <img src="@world.ImagePath" class="world-card-img-top" alt="World banner">
                         <div class="card-img-overlay d-flex justify-content-center align-items-center">
