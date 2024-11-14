@@ -64,9 +64,6 @@ namespace MSMS.Infrastructure.Data.Seeder
                 Id = 1,
                 Seed = null,
                 ServerId = 1,
-                Locations = 
-                {
-                }
             };
 
             var nether = new World (WorldType.Nether)
@@ -74,9 +71,6 @@ namespace MSMS.Infrastructure.Data.Seeder
                 Id = 2,
                 Seed = null,
                 ServerId = 1,
-                Locations = 
-                {
-                }
             };
 
             var end = new World(WorldType.End)

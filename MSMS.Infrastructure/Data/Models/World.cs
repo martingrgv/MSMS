@@ -6,11 +6,15 @@ namespace MSMS.Infrastructure.Data.Models
 {
     public class World
     {
+        private const string OVERWORLD_IMAGE_PATH = "/images/servers/default/overworld.jpg";
+        private const string NETHER_IMAGE_PATH = "/images/servers/default/nether.jpg";
+        private const string END_IMAGE_PATH = "/images/servers/default/end.jpg";
+
         public World(WorldType worldType)
         {
-            if (worldType == WorldType.Overworld) ImagePath = "/images/default/overworld.jpg";
-            else if (worldType == WorldType.Nether) ImagePath = "/images/default/nether.jpg";
-            else if (worldType == WorldType.End) ImagePath = "/images/default/end.jpg";
+            if (worldType == WorldType.Overworld) ImagePath = OVERWORLD_IMAGE_PATH;
+            else if (worldType == WorldType.Nether) ImagePath = NETHER_IMAGE_PATH;
+            else if (worldType == WorldType.End) ImagePath = END_IMAGE_PATH;
             else throw new ArgumentException("Invalid world type!");
 
             WorldType = worldType;
