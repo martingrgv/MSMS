@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MSMS.Infrastructure.Migrations
 {
     [DbContext(typeof(MSMSDbContext))]
-    [Migration("20241030235106_DataSeed")]
-    partial class DataSeed
+    [Migration("20241118200738_DbSeed")]
+    partial class DbSeed
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -109,7 +109,7 @@ namespace MSMS.Infrastructure.Migrations
                         {
                             Id = "091a0932-5bea-4155-9ad1-db73e28aa455",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b3900669-7f88-4815-a8bb-2958d2d8b036",
+                            ConcurrencyStamp = "2e46f2fb-8e82-4aa5-800c-88b733fcc805",
                             Email = "guest@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Madman",
@@ -117,9 +117,9 @@ namespace MSMS.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "GUEST@MAIL.COM",
                             NormalizedUserName = "GUEST",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKBKQCaFdVKYZsxz3Hf7tKVjxOCHNpojONJtUdjY7n2eEXLfoyKUgb4hSJQAvUMVFw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPohxZ/xCIvC9beKJhHueKSFUdJaALVHOC8rIuzzcRtOjHeu/50OfTuyL7L0fv0F+Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "880fc00d-a7d0-4add-9d29-0885dd3eb4a1",
+                            SecurityStamp = "fa4f4ff3-1480-4b02-9dd5-605f661fcee8",
                             TwoFactorEnabled = false,
                             UserName = "guest"
                         },
@@ -127,7 +127,7 @@ namespace MSMS.Infrastructure.Migrations
                         {
                             Id = "13c6c731-7d69-4db3-a3c8-1d0b77f2d26a",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "07461956-a278-4ade-81b0-e1b5341ba0eb",
+                            ConcurrencyStamp = "a9ba62c0-2ac4-4d54-a610-3f301a8948a1",
                             Email = "creator@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Willson",
@@ -135,9 +135,9 @@ namespace MSMS.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "CREATOR@MAIL.COM",
                             NormalizedUserName = "CREATOR",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEAePKglv/ihUfnbV3H5bvFCOWKmzzzbufd/0c1S//7Iav52UUbYkihouiaDMC0q0w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOuSlaGwh3X7RsfGu4QtPlxsa+XEnic1bSQP4g1aP8DRs+8Xn24XrGfYgL/itCsTUA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "141589ea-c154-4da2-b574-1ee04f07dc16",
+                            SecurityStamp = "9dfabb10-f107-4a0f-bac9-76139ed358b9",
                             TwoFactorEnabled = false,
                             UserName = "creator"
                         });
@@ -311,21 +311,21 @@ namespace MSMS.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            ImagePath = "/images/default/overworld.jpg",
+                            ImagePath = "/images/servers/default/overworld.jpg",
                             ServerId = 1,
                             WorldType = 0
                         },
                         new
                         {
                             Id = 2,
-                            ImagePath = "/images/default/nether.jpg",
+                            ImagePath = "/images/servers/default/nether.jpg",
                             ServerId = 1,
                             WorldType = 1
                         },
                         new
                         {
                             Id = 3,
-                            ImagePath = "/images/default/end.jpg",
+                            ImagePath = "/images/servers/default/end.jpg",
                             ServerId = 1,
                             WorldType = 2
                         });
