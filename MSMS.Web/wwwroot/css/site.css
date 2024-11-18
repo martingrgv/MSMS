@@ -140,6 +140,12 @@ a:hover {
     border-radius: 0;
 }
 
+.btn-xl {
+  padding: 1rem 2rem;
+  font-size: 1.25rem;
+  border-radius: 0;
+}
+
 .btn-primary {
     color: #FFFFFF;
     background-color: #367723;
@@ -162,6 +168,7 @@ a:hover {
     font-weight: bold;
     text-decoration: none;
     color: #ffffff;
+    background-color: #171615;
     cursor: default;
 }
 
@@ -303,4 +310,63 @@ a:hover {
 .server-owner {
     top: 28rem;
     right: 3rem;
+}
+
+.table {
+    color: #fff;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-family: 'VT323';
+  font-size: 20pt;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #fff;
+  background-color: #262423;
+  background-clip: padding-box;
+  border: 0;
+  border-top: 3px solid #000;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 0;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus {
+  color: #fff;
+  background-color: #636160;
+  border: 0;
+  border-top: 3px solid #3C3938;
+  outline: 0;
+  box-shadow: none;
+}
+
+.form-control::placeholder {
+  color: #898989;
+  opacity: 1;
+}
+
+.form-control::file-selector-button {
+  padding: 0.375rem 0.75rem;
+  margin: -0.375rem -0.75rem;
+  -webkit-margin-end: 0.75rem;
+  margin-inline-end: 0.75rem;
+  color: #fff;
+  background-color: #367723;
+  pointer-events: none;
+  border-color: inherit;
+  border-style: solid;
+  border-width: 0;
+  border-inline-end-width: 0;
+  border-radius: 0;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:hover:not(:disabled):not([readonly])::file-selector-button {
+  color: #fff;
+  background-color: #193910;
 }
