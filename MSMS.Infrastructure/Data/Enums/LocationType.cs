@@ -7,6 +7,7 @@
         Landscape,
         Portal,
         Spawner,
-        Farm
+        Farm,
+        Undefined
     }
 }

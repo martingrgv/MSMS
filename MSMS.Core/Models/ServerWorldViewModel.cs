@@ -13,5 +13,6 @@ public class ServerWorldViewModel
         public PlayMode PlayMode { get; set; }
         public string? Description { get; set; } = null!;
         public string OwnerName { get; set; } = null!;
+        public WorldType WorldType { get; set; } 
         public ICollection<Location> Locations {get; set;} = new HashSet<Location>();
 }

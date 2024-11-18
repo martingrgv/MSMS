@@ -20,7 +20,7 @@
 
 <div class="container">
   <div class="d-flex justify-content-center mb-5">
-    <a asp-controller="Server" asp-action="AddLocation" asp-route-id="@Model.Id" class="btn btn-primary btn-xl">NEW LOCATION</a>
+    <a asp-controller="Server" asp-action="AddLocation" asp-route-id="@Model.Id" asp-route-worldType="@Model.WorldType" class="btn btn-primary btn-xl">NEW LOCATION</a>
   </div>
 
   <table class="table">
