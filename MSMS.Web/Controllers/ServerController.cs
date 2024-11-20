@@ -105,34 +105,36 @@ namespace MSMS.Web.Controllers
         }
 
         [HttpGet]
-        [Route("Server/{id}/{worldType}/AddLocation")]
-        public IActionResult AddLocation(int id, WorldType worldType)
+        [Route("Server/{id}/{worldType}/AddLocation/{worldId}")]
+        public async Task<IActionResult> AddLocation([FromRoute] int id, string worldType, int worldId)
         {
             if (ModelState.IsValid == false)
             {
                 return BadRequest(ModelState);
             }
 
-            var model = new ServerLocationFormModel
+            if (!Enum.TryParse<WorldType>(worldType, true, out var parsedType))
             {
-                WorldType = worldType,
-                CreatorId = User.Id()
-            };
+                return BadRequest();               
+            }
+
+            var model = new ServerLocationFormModel();
             return View(model);
         }
 
         [HttpPost]
-        [Route("Server/{id}/{worldType}/AddLocation")]
-        public IActionResult AddLocation (ServerLocationFormModel model)
+        [Route("Server/{id}/{worldType}/AddLocation/{worldId}")]
+        public async Task<IActionResult> AddLocation (int id, int worldId, ServerLocationFormModel model)
         {
-            model.WorldId = 1;
-
             if (ModelState.IsValid == false)
             {
                 return BadRequest(ModelState);
             }
 
-            return RedirectToAction(nameof(World), new { id = model.WorldId, worldType = model.WorldType.ToString() });
+            model.WorldId = worldId;
+            await _serverService.CreateLocationAsync(model, User.Id());
+
+            return RedirectToAction(nameof(World), new { id, worldType = model.WorldType.ToString() });
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using MSMS.Core.Contracts;
@@ -22,13 +23,21 @@ namespace MSMS.Core.Services
         public async Task<IEnumerable<ServerViewModel>> AllServersAsync()
         {
             var servers = await _repository
-                .All<Server>()
-                .Include(s => s.Worlds)
+                .AllReadOnly<Server>()
                 .Include(s => s.Owner)
                 .ToListAsync();
 
             var mappedModel = _mapper.Map<IEnumerable<ServerViewModel>>(servers);
             return mappedModel;
+        }
+
+        public async Task CreateLocationAsync(ServerLocationFormModel model, string creatorId)
+        {
+            Location location = _mapper.Map<Location>(model); 
+            location.CreatorId = creatorId;
+
+            await _repository.AddAsync(location);
+            await _repository.SaveChangesAsync();
         }
 
         public async Task CreateServerAsync(ServerFormModel model, string serverImagePath, string ownerId)
@@ -76,10 +85,38 @@ namespace MSMS.Core.Services
             await _repository.LoadCollectionAsync(server, s => s.Worlds);
 
             var world = server.Worlds.FirstOrDefault(w => w.WorldType == worldType);
+
+            if (world == null)
+            {
+                throw new InvalidOperationException($"Could not find server world with world type: {worldType}");
+            }
+
             await _repository.LoadCollectionAsync(world, w => w.Locations);
 
             var mappedModel = _mapper.Map<ServerWorldViewModel>(server);
+            _mapper.Map(world, mappedModel);
             return mappedModel;
+        }
+
+        public async Task<int> GetWorldIdAsync(int serverId, WorldType worldType)
+        {
+            Server? server = await _repository.GetByIdAsync<Server>(serverId);
+
+            if (server == null)
+            {
+                throw new InvalidOperationException($"No server found by id: {serverId}");
+            }
+
+            await _repository.LoadCollectionAsync(server, s => s.Worlds);
+
+            var world = server.Worlds.FirstOrDefault(w => w.WorldType == worldType);
+
+            if (world == null)
+            {
+                throw new InvalidOperationException($"Could not find server world with world type: {worldType}");
+            }
+
+            return world.Id;
         }
 
         public async Task<bool> IpExistsAsync(string ip)

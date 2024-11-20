@@ -1,5 +1,6 @@
 using System;
 using AutoMapper;
+using Microsoft.Data.SqlClient;
 using MSMS.Core.Models;
 using MSMS.Infrastructure.Data.Models;
 
@@ -21,12 +22,18 @@ namespace MSMS.Core.Profiles
                 .ForMember(dest => dest.ImagePath, opt =>
                     opt.MapFrom(src => src.ImagePath.Replace(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"), "")));
             CreateMap<Server, ServerWorldViewModel>()
+                .ForMember(dest => dest.ServerId, opt =>
+                    opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.WorldType, opt =>
+                    opt.Ignore())
                 .ForMember(dest => dest.Locations, opt =>
-                    opt.MapFrom(src => src.Worlds.SelectMany(w => w.Locations)))
-                .ForMember(dest => dest.OwnerName, opt => 
-                    opt.MapFrom(src => src.Owner.UserName))   
+                    opt.Ignore())
                 .ForMember(dest => dest.ImagePath, opt =>
-                    opt.MapFrom(src => src.ImagePath.Replace(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"), "")));
+                    opt.Ignore())
+                .ForMember(dest => dest.ServerName, opt =>
+                    opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.OwnerName, opt => 
+                    opt.MapFrom(src => src.Owner.UserName));
         }
     }
 }

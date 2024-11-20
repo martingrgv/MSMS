@@ -6,7 +6,8 @@ namespace MSMS.Core.Models;
 public class ServerWorldViewModel
 {
         public int Id { get; set; }
-        public string Name { get; set; } = null!;
+        public int ServerId { get; set; }
+        public string ServerName { get; set; } = null!;
         public string ImagePath { get; set; } = null!;
         public string IpAddress { get; set; } = null!;
         public string GameVersion { get; set; } = null!;

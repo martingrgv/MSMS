@@ -13,7 +13,7 @@ public class ServerLocationFormModel
     public string Name { get; set; } = null!;
 
     [Required]
-    [RegularExpression(@"\d{1,5}\/\d{1,5}\/\d{1,5}")]
+    [RegularExpression(@"-?\d{1,5}\/-?\d{1,5}\/-?\d{1,5}", ErrorMessage = "Invalid coordinates! Format must be 0/0/0")]
     public string Coordinates { get; set; } = null!;
 
     [Required]
