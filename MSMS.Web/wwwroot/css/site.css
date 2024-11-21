@@ -1,5 +1,6 @@
 html {
   font-size: 14px;
+  height: 100%;
 }
 
 @media (min-width: 768px) {
@@ -18,5 +19,367 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    color: #ffffff;
+    margin-bottom: 60px;
+}
+
+p {
+    font-family: 'Inder';
+}
+
+a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: all ease-in-out 150ms;
+}
+
+a:hover {
+    color: #6B6562;
+    text-decoration: none;
+}
+
+.container-fluid {
+    padding: 0;
+}
+
+.bg-dark {
+    background-color: #171615 !important;
+}
+
+.bg-image {
+    background-image: linear-gradient(rgba(0, 0, 0, .8), rgba(0, 0, 0, .8)), url('/images/background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.nav-bg-dark{
+    background-color: #262423 !important;
+}
+
+.navbar {
+    padding: 1rem 1.875rem;
+}
+
+.navbar-nav {
+    justify-content: center;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: #ffffff;
+}
+
+.navbar-brand {
+    font-size: 2.2rem;
+    /*font-family: 'Inknut Antiqua';*/
+    letter-spacing: 0.2rem;
+    margin-left: 2rem;
+}
+
+.nav-link {
+    font-family: 'Inder';
+}
+
+.navbar-dark .navbar-nav .nav-link:focus, .navbar-dark .navbar-nav .nav-link:hover {
+    color: #367723;
+}
+
+.display-2 {
+    font-size: calc(2.5rem + 2vw)
+}
+
+.display-3 {
+    font-size: calc(1.475rem + 1.5vw)
+}
+
+.display-4 {
+    font-size: calc(1.475rem + 0.5vw)
+}
+
+.text-primary {
+    color: #FFFFFF;
+}
+
+.text-secondary {
+    color: #6B6562!important;
+}
+
+.text-blocky {
+    font-family: 'VT323';
+}
+
+.text-vertical {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #000000 !important;
+}
+
+.box-shadow {
+    box-shadow: 0 4px 0 0 rgba(0,0,0,.25)
+}
+
+.btn {
+    border: none;
+    border-radius: 0;
+}
+
+.btn:hover {
+    color: #FFFFFF;
+    background-color: #172E11;
+}
+
+.btn-check:active+.btn-primary, .btn-check:checked+.btn-primary, .btn-primary.active, .btn-primary:active, .show>.btn-primary.dropdown-toggle, .btn-check:focus+.btn-primary, .btn-primary:focus, .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    background-color: #367723;
+    border: none;
+    box-shadow: none;
+}
+
+.btn-lg {
+    border-radius: 0;
+}
+
+.btn-xl {
+  padding: 1rem 2rem;
+  font-size: 1.25rem;
+  border-radius: 0;
+}
+
+.btn-primary {
+    color: #FFFFFF;
+    background-color: #367723;
+}
+
+.btn-primary:hover {
+    background-color: #172E11;
+}
+
+.btn-add  {
+    position: fixed;
+    top: calc(9rem + 1.5vw);
+    right: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 20pt;
+    font-weight: bold;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #171615;
+    cursor: default;
+}
+
+.btn-add::after {
+    content: '';
+    position: absolute;
+    top: 2.5rem;
+    left: 0;
+    width: 100%;
+    height: 0.25rem;
+    background: #262423;
+}
+
+.btn-add:hover {
+    color: #ababab;
+    cursor: pointer;
+}
+
+.card {
+    width: 20rem;
+    border: none;
+    border-radius: 0;
+    background-color: #171615;
+}
+
+.card::after {
+    content: '';
+    position: absolute;
+    top: 36.5rem;
+    left: 0;
+    width: 100%;
+    height: 0.25rem;
+    background: #262423;
+}
+
+.card-img-top {
+    width: 25rem;
+    height: 25rem;
+    object-fit: cover;
+}
+
+.world-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); 
+}
+
+.world-card {
+    position: relative;
+    width: 20rem;
+    border: none;
+    border-radius: 0;
+    background-color: #171615;
+}
+
+.world-card-img-top {
+    width: 20rem;
+    height: 25rem;
+    object-fit: cover;
+}
+
+.card-body {
+    flex: auto;
+    font-family: 'Inknut Antiqua';
+    padding: 1rem 0;
+}
+
+.card-body h5{
+    font-size: 14pt;
+    font-weight: lighter;
+}
+
+.card-body p {
+    color: #6B6562;
+    font-size: 11pt;
+    margin: 0
+}
+
+.card-body a {
+    font-family: 'Koulen';
+    letter-spacing: 0.12rem;
+    margin: 1rem 0;
+}
+
+.card .btn {
+    padding: .575rem 2.5rem;
+}
+
+.banner-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); 
+}
+
+.banner-container {
+    position: relative;
+    width: 100%;
+    height: 25rem;
+    z-index: -1;
+    padding: 0;
+}
+
+.banner-image {
+    object-fit: cover;
+    height: 25rem;
+}
+
+.server-name, .server-ip, .server-game-version, .server-owner {
+    position: absolute;
+    font-size: 16pt;
+}
+
+.server-name {
+    font-size: 32pt;
+    top: 15rem;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.server-ip {
+    top: 19rem;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.server-game-version {
+    top: 28rem;
+    left: 3rem;
+}
+
+.server-owner {
+    top: 28rem;
+    right: 3rem;
+}
+
+.table {
+    color: #fff;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-family: 'VT323';
+  font-size: 20pt;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #fff;
+  background-color: #262423;
+  background-clip: padding-box;
+  border: 0;
+  border-top: 3px solid #000;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 0;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus {
+  color: #fff;
+  background-color: #636160;
+  border: 0;
+  border-top: 3px solid #3C3938;
+  outline: 0;
+  box-shadow: none;
+}
+
+.form-control::placeholder {
+  color: #898989;
+  opacity: 1;
+}
+
+.form-control::file-selector-button {
+  padding: 0.375rem 0.75rem;
+  margin: -0.375rem -0.75rem;
+  -webkit-margin-end: 0.75rem;
+  margin-inline-end: 0.75rem;
+  color: #fff;
+  background-color: #367723;
+  pointer-events: none;
+  border-color: inherit;
+  border-style: solid;
+  border-width: 0;
+  border-inline-end-width: 0;
+  border-radius: 0;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:hover:not(:disabled):not([readonly])::file-selector-button {
+  color: #fff;
+  background-color: #193910;
+}
+
+#totalServersStatistic {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+#registeredUsersStatistic {
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }

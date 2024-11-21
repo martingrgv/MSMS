@@ -1,0 +1,47 @@
+﻿@model ServerWorldViewModel
+
+@{
+    ViewBag.Title = "Server World";
+}
+
+<div class="container-fluid mb-5">
+    <div class="row">
+        <div class="banner-container">
+            <img src="@Model.ImagePath" class="banner-image img-fluid w-100" alt="Server banner">
+        </div>
+    </div>
+    <p class="server-name">@Model.WorldType.ToString()</p>
+    <p class="text-secondary server-ip">@Model.ServerName</p>
+    <p class="server-game-version"><span class="text-secondary">Version:</span> @Model.GameVersion</p>
+    <p class="server-owner"><span class="text-secondary">Owner:</span> @Model.OwnerName</p>
+</div>
+
+
+
+<div class="container">
+  <div class="d-flex justify-content-center mb-5">
+    <a asp-controller="Server" asp-action="AddLocation" asp-route-id="@Model.ServerId" asp-route-worldType="@Model.WorldType" asp-route-worldId="@Model.Id" class="btn btn-primary btn-xl">NEW LOCATION</a>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+        <th scope="col">Coordinates</th>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var location in Model.Locations )
+      {
+          <tr>
+          <th scope="row">@location.LocationType</th>
+          <td>@location.Coordinates</td>
+          <td>@location.Name</td>
+          <td>@location.Description</td>
+          </tr>
+      }
+    </tbody>
+  </table>
+</div>
