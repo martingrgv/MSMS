@@ -3,7 +3,6 @@
     public enum LocationAccessModifier
     {
         Public,
-        AuthorizedShare,
         Private
     }
 }

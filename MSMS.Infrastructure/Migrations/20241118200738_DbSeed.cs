@@ -7,7 +7,7 @@
 namespace MSMS.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class DataSeed : Migration
+    public partial class DbSeed : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,8 +17,8 @@ namespace MSMS.Infrastructure.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "091a0932-5bea-4155-9ad1-db73e28aa455", 0, "b3900669-7f88-4815-a8bb-2958d2d8b036", "guest@mail.com", false, "Madman", "Waller", false, null, "GUEST@MAIL.COM", "GUEST", "AQAAAAIAAYagAAAAEKBKQCaFdVKYZsxz3Hf7tKVjxOCHNpojONJtUdjY7n2eEXLfoyKUgb4hSJQAvUMVFw==", null, false, "880fc00d-a7d0-4add-9d29-0885dd3eb4a1", false, "guest" },
-                    { "13c6c731-7d69-4db3-a3c8-1d0b77f2d26a", 0, "07461956-a278-4ade-81b0-e1b5341ba0eb", "creator@mail.com", false, "Willson", "Smith", false, null, "CREATOR@MAIL.COM", "CREATOR", "AQAAAAIAAYagAAAAEEAePKglv/ihUfnbV3H5bvFCOWKmzzzbufd/0c1S//7Iav52UUbYkihouiaDMC0q0w==", null, false, "141589ea-c154-4da2-b574-1ee04f07dc16", false, "creator" }
+                    { "091a0932-5bea-4155-9ad1-db73e28aa455", 0, "2e46f2fb-8e82-4aa5-800c-88b733fcc805", "guest@mail.com", false, "Madman", "Waller", false, null, "GUEST@MAIL.COM", "GUEST", "AQAAAAIAAYagAAAAEPohxZ/xCIvC9beKJhHueKSFUdJaALVHOC8rIuzzcRtOjHeu/50OfTuyL7L0fv0F+Q==", null, false, "fa4f4ff3-1480-4b02-9dd5-605f661fcee8", false, "guest" },
+                    { "13c6c731-7d69-4db3-a3c8-1d0b77f2d26a", 0, "a9ba62c0-2ac4-4d54-a610-3f301a8948a1", "creator@mail.com", false, "Willson", "Smith", false, null, "CREATOR@MAIL.COM", "CREATOR", "AQAAAAIAAYagAAAAEOuSlaGwh3X7RsfGu4QtPlxsa+XEnic1bSQP4g1aP8DRs+8Xn24XrGfYgL/itCsTUA==", null, false, "9dfabb10-f107-4a0f-bac9-76139ed358b9", false, "creator" }
                 });
 
             migrationBuilder.InsertData(
@@ -31,9 +31,9 @@ namespace MSMS.Infrastructure.Migrations
                 columns: new[] { "Id", "ImagePath", "Seed", "ServerId", "WorldType" },
                 values: new object[,]
                 {
-                    { 1, "/images/default/overworld.jpg", null, 1, 0 },
-                    { 2, "/images/default/nether.jpg", null, 1, 1 },
-                    { 3, "/images/default/end.jpg", null, 1, 2 }
+                    { 1, "/images/servers/default/overworld.jpg", null, 1, 0 },
+                    { 2, "/images/servers/default/nether.jpg", null, 1, 1 },
+                    { 3, "/images/servers/default/end.jpg", null, 1, 2 }
                 });
 
             migrationBuilder.InsertData(

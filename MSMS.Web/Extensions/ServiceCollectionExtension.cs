@@ -26,7 +26,8 @@ namespace MSMS.Web.Extensions
             string connectionString = configuration.GetConnectionString("MSMSConnectionString") ?? throw new InvalidOperationException("Could not find connection string!");
             serviceCollection.AddDbContext<MSMSDbContext>(options =>
             {
-                options.UseSqlServer(connectionString);
+                options.UseSqlServer(connectionString,
+                    b => b.MigrationsAssembly("MSMS.Infrastructure"));
             });
             serviceCollection.AddDatabaseDeveloperPageExceptionFilter();
 

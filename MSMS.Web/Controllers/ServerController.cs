@@ -1,6 +1,7 @@
 ﻿using Humanizer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using MSMS.Core.Contracts;
 using MSMS.Core.Models;
 using MSMS.Infrastructure.Data.Enums;
@@ -27,6 +28,7 @@ namespace MSMS.Web.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+        [Route("Server/Details/{id}")]
         public async Task<IActionResult> Details([FromRoute] int id)
         {
             if (id == 0)
@@ -84,7 +86,7 @@ namespace MSMS.Web.Controllers
         }
 
         [HttpGet]
-        [Route("Server/{id}/World/{worldType}")]
+        [Route("Server/{id}/{worldType}")]
         public async Task<IActionResult> World([FromRoute] int id, string worldType)
         {
             if (id == 0)
@@ -100,6 +102,39 @@ namespace MSMS.Web.Controllers
             var model = await _serverService.GetServerWorldAsync(id, parsedType);
 
             return View(model);
+        }
+
+        [HttpGet]
+        [Route("Server/{id}/{worldType}/AddLocation/{worldId}")]
+        public async Task<IActionResult> AddLocation([FromRoute] int id, string worldType, int worldId)
+        {
+            if (ModelState.IsValid == false)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (!Enum.TryParse<WorldType>(worldType, true, out var parsedType))
+            {
+                return BadRequest();               
+            }
+
+            var model = new ServerLocationFormModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("Server/{id}/{worldType}/AddLocation/{worldId}")]
+        public async Task<IActionResult> AddLocation (int id, int worldId, ServerLocationFormModel model)
+        {
+            if (ModelState.IsValid == false)
+            {
+                return BadRequest(ModelState);
+            }
+
+            model.WorldId = worldId;
+            await _serverService.CreateLocationAsync(model, User.Id());
+
+            return RedirectToAction(nameof(World), new { id, worldType = model.WorldType.ToString() });
         }
     }
 }
