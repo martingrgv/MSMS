@@ -17,8 +17,6 @@ namespace MSMS.Core.Models
         public string IpAddress { get; set; } = null!;
 
         [Required]
-        [RegularExpression(@"^\d\.\d{1,2}(\.\d)?$", ErrorMessage = "Invalid Version")]
-        [StringLength(SERVER_GAME_VERSION_MAX_LENGTH, MinimumLength = SERVER_GAME_VERSION_MIN_LENGTH, ErrorMessage = "Invalid Version")]
         public string GameVersion { get; set;} = null!;
 
         [Required]
