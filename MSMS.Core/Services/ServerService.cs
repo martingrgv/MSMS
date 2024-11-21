@@ -125,10 +125,5 @@ namespace MSMS.Core.Services
                 .AllReadOnly<Server>()
                 .AnyAsync(s => s.IpAddress == ip);
         }
-
-        public Task<int> ServersCountAsync()
-        {
-            return Task.FromResult(_repository.AllReadOnly<Server>().Count());
-        }
     }
 }
