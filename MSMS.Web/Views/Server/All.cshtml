@@ -1,7 +1,12 @@
-﻿@model IEnumerable<ServerViewModel>
+﻿@using MSMS.Core.Contracts
+
+@model IEnumerable<ServerViewModel>
+@inject IStatisticsService statisticsService
 
 @{
     ViewBag.Title = "Servers";
+	int totalServersCount = (int)Math.Ceiling((decimal)await statisticsService.ServersCountAsync() / 9);
+    int currentPage = ViewData["CurrentPage"] != null ? (int)ViewData["CurrentPage"]! : 1;
 }
 
 <div class="container mt-5">
@@ -34,3 +39,22 @@ else
 </div>
 
 <a href="/Server/Create" class="btn-add">+</a>
+
+<nav class="d-flex justify-content-center m-3" aria-label="Page navigation">
+    <ul class="pagination">
+        <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+            <a class="page-link" asp-controller="Server" asp-action="All" asp-route-page="@(currentPage - 1)">Previous</a>
+        </li>
+
+        @for (int i = 1; i <= totalServersCount; i++)
+        {
+            <li class="page-item @(i == currentPage ? "active" : "")">
+                <a class="page-link" asp-controller="Server" asp-action="All" asp-route-page="@i">@i</a>
+            </li>
+        }
+
+        <li class="page-item @(currentPage == totalServersCount ? "disabled" : "")">
+            <a class="page-link" asp-controller="Server" asp-action="All" asp-route-page="@(currentPage + 1)">Next</a>
+        </li>
+    </ul>
+</nav>

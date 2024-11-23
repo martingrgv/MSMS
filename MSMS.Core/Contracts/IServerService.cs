@@ -6,6 +6,7 @@ namespace MSMS.Core.Contracts
     public interface IServerService
     {
         Task<IEnumerable<ServerViewModel>> AllServersAsync();
+        Task<IEnumerable<ServerViewModel>> AllServersAsync(int page, int pageSize);
         Task CreateServerAsync(ServerFormModel model, string serverImagePath, string ownerId);
         Task<bool> IpExistsAsync(string ip);
         Task<ServerDetailsViewModel> GetServerDetailsAsync(int serverId);

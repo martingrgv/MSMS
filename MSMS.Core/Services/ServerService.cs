@@ -31,6 +31,21 @@ namespace MSMS.Core.Services
             return mappedModel;
         }
 
+        public async Task<IEnumerable<ServerViewModel>> AllServersAsync(int page, int pageSize)
+        {
+            int serversCount = await _repository.AllReadOnly<Server>().CountAsync();
+
+            var servers = await _repository
+                .AllReadOnly<Server>()
+                .Include(s => s.Owner)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            var mappedModel = _mapper.Map<IEnumerable<ServerViewModel>>(servers);
+            return mappedModel;
+        }
+
         public async Task CreateLocationAsync(ServerLocationFormModel model, string creatorId)
         {
             Location location = _mapper.Map<Location>(model); 

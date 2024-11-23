@@ -12,17 +12,27 @@ namespace MSMS.Web.Controllers
     public class ServerController : BaseController
     {
         private IServerService _serverService;
+        private IStatisticsService _statisticsService;
 
-        public ServerController(IServerService serverService)
+        public ServerController(IServerService serverService, IStatisticsService statisticsService)
         {
             _serverService = serverService;
+            _statisticsService = statisticsService;
         }
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All([FromQuery]int page)
         {
-            var models = await _serverService.AllServersAsync();
+            int serversPerPage = 9;
+            ViewData["CurrentPage"] = page;
+
+            if (page * serversPerPage - serversPerPage + 1 > await _statisticsService.ServersCountAsync())
+            {
+                return NotFound();
+            }
+
+            var models = await _serverService.AllServersAsync(page, serversPerPage);
             return View(models);
         }
 
