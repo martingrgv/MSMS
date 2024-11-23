@@ -2,10 +2,36 @@
     ViewBag.Title = "Welcome";
 }
 
-<div class="d-flex flex-column align-items-center justify-content-center bg-image" style="height: 85vh">
+<div class="container-fluid d-flex flex-column align-items-center justify-content-center bg-image" style="height: 90vh">
     <div class="mb-4">
         <h1 class="display-4">WELCOME TO</h1>
         <h1 class="display-3 text-blocky">MINECRAFT SERVER MANAGEMENT STUDIO</h1>
     </div>
     <a asp-controller="Server" asp-action="All" class="btn btn-lg btn-primary">SERVERS</a>
 </div>
+
+<div>
+    <h3 class=" m-3 text-blocky" id="totalServersStatistic">TOTAL SERVERS: <span id="serversCountStatistic"></span></h3>
+    <h3 class=" m-3 text-blocky" id="registeredUsersStatistic">REGISTERED USERS: <span id="registeredUsersCountStatistic"></span></h3>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $.get('/api/statistics/totalServersCount', function(serversCount) {
+                $('#serversCountStatistic').text(serversCount);
+            })
+            .fail(function() {
+                $('#serversCountStatistic').text('Unknown!');
+                console.error('Error! Failed to fetch servers count.');
+            });
+            $.get('/api/statistics/registeredUsersCount', function(usersCount) {
+                $('#registeredUsersCountStatistic').text(usersCount);
+            })
+            .fail(function() {
+                $('#registeredUsersCountStatistic').text('Unknown!');
+                console.error('Error! Failed to fetch registered users count.');
+            });
+        });
+    </script>
+}

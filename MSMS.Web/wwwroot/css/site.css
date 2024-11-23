@@ -1,5 +1,6 @@
 html {
   font-size: 14px;
+  height: 100%;
 }
 
 @media (min-width: 768px) {
@@ -369,4 +370,16 @@ a:hover {
 .form-control:hover:not(:disabled):not([readonly])::file-selector-button {
   color: #fff;
   background-color: #193910;
+}
+
+#totalServersStatistic {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+#registeredUsersStatistic {
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
