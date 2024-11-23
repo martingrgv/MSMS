@@ -11,6 +11,7 @@ namespace MSMS.Web.Controllers
 {
     public class ServerController : BaseController
     {
+        private const int serversPerPage = 9;
         private IServerService _serverService;
         private IStatisticsService _statisticsService;
 
@@ -24,7 +25,6 @@ namespace MSMS.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> All([FromQuery]int page)
         {
-            int serversPerPage = 9;
             ViewData["CurrentPage"] = page;
 
             if (page * serversPerPage - serversPerPage + 1 > await _statisticsService.ServersCountAsync())
@@ -92,7 +92,9 @@ namespace MSMS.Web.Controllers
             }
 
             await _serverService.CreateServerAsync(model, imagePath, User.Id());
-            return RedirectToAction(nameof(All));
+
+            int redirectPage = (int)Math.Ceiling((double)await _statisticsService.ServersCountAsync() / serversPerPage);
+            return RedirectToAction(nameof(All), new { page = redirectPage});
         }
 
         [HttpGet]
