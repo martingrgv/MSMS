@@ -23,17 +23,19 @@ namespace MSMS.Web.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> All([FromQuery]int page)
+        public async Task<IActionResult> All([FromQuery]AllServersQueryModel query)
         {
-            ViewData["CurrentPage"] = page;
+            var model = await _serverService.AllServersAsync(
+                query.SearchItem,
+                query.SortingType,
+                query.CurrentPage,
+                AllServersQueryModel.ServersPerPage
+            );
 
-            if (page * serversPerPage - serversPerPage + 1 > await _statisticsService.ServersCountAsync())
-            {
-                return NotFound();
-            }
+            query.TotalServersCount = model.TotalServersCount;
+            query.Servers = model.Servers;
 
-            var models = await _serverService.AllServersAsync(page, serversPerPage);
-            return View(models);
+            return View(query);
         }
 
         [HttpGet]
@@ -93,8 +95,7 @@ namespace MSMS.Web.Controllers
 
             await _serverService.CreateServerAsync(model, imagePath, User.Id());
 
-            int redirectPage = (int)Math.Ceiling((double)await _statisticsService.ServersCountAsync() / serversPerPage);
-            return RedirectToAction(nameof(All), new { page = redirectPage});
+            return RedirectToAction(nameof(All));
         }
 
         [HttpGet]
