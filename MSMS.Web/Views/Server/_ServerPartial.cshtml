@@ -1,0 +1,13 @@
+﻿@model ServerViewModel
+
+<div class="col-md-4 mb-5">
+    <div class="card h-100 w-100 m-5">
+        <img class="card-img-top" src="@Model.ImagePath" alt="Server banner">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Name</h5>
+            <p class="card-text">IP: @Model.IpAddress</p>
+            <p>Owner: @Model.OwnerName</p>
+            <a asp-controller="Server" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-primary">DETAILS</a>
+        </div>
+    </div>
+</div>
