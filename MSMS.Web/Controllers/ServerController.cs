@@ -17,12 +17,14 @@ namespace MSMS.Web.Controllers
         private IServerService _serverService;
         private IStatisticsService _statisticsService;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public ServerController(IServerService serverService, IStatisticsService statisticsService, UserManager<ApplicationUser> userManager)
+        public ServerController(IServerService serverService, IStatisticsService statisticsService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _serverService = serverService;
             _statisticsService = statisticsService;
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         [HttpGet]
@@ -106,7 +108,10 @@ namespace MSMS.Web.Controllers
             }
 
             if (await _userManager.IsInRoleAsync(applicationUser, nameof(Role.Owner)) == false)
+            {
                 await _userManager.AddToRoleAsync(applicationUser, nameof(Role.Owner));
+                await _signInManager.RefreshSignInAsync(applicationUser);
+            }
 
             return RedirectToAction(nameof(All));
         }
