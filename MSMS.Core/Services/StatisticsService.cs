@@ -24,4 +24,14 @@ public class StatisticsService : IStatisticsService
     {
         return await _repository.AllReadOnly<Server>().CountAsync();
     }
+
+    public async Task<int> UserServersCountAsync(string userId)
+    {
+        return await _repository.AllReadOnly<Server>().Where(s => s.OwnerId == userId).CountAsync();
+    }
+
+    public async Task<int> UserServersUsersCountAsync(string userId)
+    {
+        throw new NotImplementedException();
+    }
 }

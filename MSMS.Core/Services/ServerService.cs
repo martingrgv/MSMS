@@ -86,6 +86,13 @@ namespace MSMS.Core.Services
             await _repository.SaveChangesAsync();
         }
 
+        public async Task DeleteUserServersAsync(string userId)
+        {
+            var servers = await _repository.All<Server>().Where(s => s.OwnerId == userId).ToListAsync();
+            await _repository.RemoveRangeAsync(servers);
+            await _repository.SaveChangesAsync();
+        }
+
         public async Task<ServerDetailsViewModel> GetServerDetailsAsync(int serverId)
         {
             var server = await _repository.GetByIdAsync<Server>(serverId);
