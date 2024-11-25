@@ -1,10 +1,12 @@
 ﻿using Humanizer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using MSMS.Core.Contracts;
 using MSMS.Core.Models;
 using MSMS.Infrastructure.Data.Enums;
+using MSMS.Infrastructure.Data.Models;
 using System.Security.Claims;
 
 namespace MSMS.Web.Controllers
@@ -14,11 +16,13 @@ namespace MSMS.Web.Controllers
         private const int serversPerPage = 9;
         private IServerService _serverService;
         private IStatisticsService _statisticsService;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ServerController(IServerService serverService, IStatisticsService statisticsService)
+        public ServerController(IServerService serverService, IStatisticsService statisticsService, UserManager<ApplicationUser> userManager)
         {
             _serverService = serverService;
             _statisticsService = statisticsService;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -94,6 +98,15 @@ namespace MSMS.Web.Controllers
             }
 
             await _serverService.CreateServerAsync(model, imagePath, User.Id());
+
+            var applicationUser = await User.GetApplicationUser(_userManager);
+            if (applicationUser == null)
+            {
+                throw new InvalidOperationException("Could not add user to role! User could not be found.");
+            }
+
+            if (await _userManager.IsInRoleAsync(applicationUser, nameof(Role.Owner)) == false)
+                await _userManager.AddToRoleAsync(applicationUser, nameof(Role.Owner));
 
             return RedirectToAction(nameof(All));
         }
