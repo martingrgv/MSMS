@@ -11,19 +11,31 @@ namespace MSMS.Web.Controllers
 {
     public class ServerController : BaseController
     {
+        private const int serversPerPage = 9;
         private IServerService _serverService;
+        private IStatisticsService _statisticsService;
 
-        public ServerController(IServerService serverService)
+        public ServerController(IServerService serverService, IStatisticsService statisticsService)
         {
             _serverService = serverService;
+            _statisticsService = statisticsService;
         }
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All([FromQuery]AllServersQueryModel query)
         {
-            var models = await _serverService.AllServersAsync();
-            return View(models);
+            var model = await _serverService.AllServersAsync(
+                query.SearchItem,
+                query.SortingType,
+                query.CurrentPage,
+                AllServersQueryModel.ServersPerPage
+            );
+
+            query.TotalServersCount = model.TotalServersCount;
+            query.Servers = model.Servers;
+
+            return View(query);
         }
 
         [HttpGet]
@@ -82,6 +94,7 @@ namespace MSMS.Web.Controllers
             }
 
             await _serverService.CreateServerAsync(model, imagePath, User.Id());
+
             return RedirectToAction(nameof(All));
         }
 
