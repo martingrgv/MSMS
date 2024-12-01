@@ -138,8 +138,14 @@ namespace MSMS.Web.Controllers
 
         [HttpGet]
         [Route("Server/{id}/{worldType}/AddLocation/{worldId}")]
+        [Authorize(Roles = nameof(Role.Owner))]
         public async Task<IActionResult> AddLocation([FromRoute] int id, string worldType, int worldId)
         {
+            if (await _serverService.ServerHasOwner(id, User.Id()) == false)
+            {
+                return Unauthorized();
+            }
+
             if (ModelState.IsValid == false)
             {
                 return BadRequest(ModelState);

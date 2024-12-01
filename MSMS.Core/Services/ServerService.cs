@@ -189,5 +189,10 @@ namespace MSMS.Core.Services
                 .AllReadOnly<Server>()
                 .AnyAsync(s => s.IpAddress == ip);
         }
+
+        public async Task<bool> ServerHasOwner(int serverId, string ownerId)
+        {
+            return await _repository.AllReadOnly<Server>().FirstOrDefaultAsync(s => s.Id == serverId && s.OwnerId == ownerId) != null;
+        }
     }
 }

@@ -1,4 +1,7 @@
-﻿@model ServerWorldViewModel
+﻿@using MSMS.Core.Contracts
+@using MSMS.Infrastructure.Data.Enums
+@model ServerWorldViewModel
+@inject IServerService _serverService
 
 @{
     ViewBag.Title = "Server World";
@@ -19,9 +22,12 @@
 
 
 <div class="container">
-  <div class="d-flex justify-content-center mb-5">
-    <a asp-controller="Server" asp-action="AddLocation" asp-route-id="@Model.ServerId" asp-route-worldType="@Model.WorldType" asp-route-worldId="@Model.Id" class="btn btn-primary btn-xl">NEW LOCATION</a>
-  </div>
+  @if (User.IsInRole(nameof(Role.Owner)) && await _serverService.ServerHasOwner(Model.ServerId, User.Id()))
+  {
+    <div class="d-flex justify-content-center mb-5">
+      <a asp-controller="Server" asp-action="AddLocation" asp-route-id="@Model.ServerId" asp-route-worldType="@Model.WorldType" asp-route-worldId="@Model.Id" class="btn btn-primary btn-xl">NEW LOCATION</a>
+    </div>
+  }
 
   <table class="table">
     <thead>

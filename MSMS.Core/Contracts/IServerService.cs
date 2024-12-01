@@ -15,5 +15,6 @@ namespace MSMS.Core.Contracts
         Task EditServer (ServerEditModel model);
         Task DeleteServer(int serverId);
         Task DeleteUserServersAsync(string userId);
+        Task<bool> ServerHasOwner(int serverId, string ownerId);
     }
 }
