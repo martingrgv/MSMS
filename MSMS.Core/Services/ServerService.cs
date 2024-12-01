@@ -91,10 +91,32 @@ namespace MSMS.Core.Services
             await _repository.SaveChangesAsync();
         }
 
+        public async Task DeleteServer(int serverId)
+        {
+            var server = await _repository.GetByIdAsync<Server>(serverId);
+            if (server != null)
+            {
+                await _repository.RemoveAsync(server);
+                await _repository.SaveChangesAsync();
+            }
+        }
+
         public async Task DeleteUserServersAsync(string userId)
         {
             var servers = await _repository.All<Server>().Where(s => s.OwnerId == userId).ToListAsync();
             await _repository.RemoveRangeAsync(servers);
+            await _repository.SaveChangesAsync();
+        }
+
+        public async Task EditServer(ServerEditModel model)
+        {
+            var server = await _repository.All<Server>().FirstOrDefaultAsync(s => s.Id == model.Id);
+            if (server == null)
+            {
+                return;
+            }
+
+            _mapper.Map(model, server);
             await _repository.SaveChangesAsync();
         }
 

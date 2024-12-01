@@ -9,9 +9,9 @@
             <p>Owner: @Model.OwnerName</p>
             <div class="d-flex align-items-center">
                 <a asp-controller="Server" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-primary">DETAILS</a>
-                <a asp-controller="Server" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">EDIT</a>
+                <a asp-area="Manager" asp-controller="Panel" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">EDIT</a>
                 <form asp-area="Manager" asp-controller="Panel" asp-action="Delete" method="post">
-                    <input type="hidden" asp-route-id="@Model.Id" />
+                    <input type="hidden" ="@Model.Id" />
                     <button type="submit" class="btn btn-danger">DELETE</button>
                 </form>
             </div>

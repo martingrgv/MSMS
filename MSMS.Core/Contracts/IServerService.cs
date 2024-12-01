@@ -12,6 +12,8 @@ namespace MSMS.Core.Contracts
         Task<ServerWorldViewModel> GetServerWorldAsync(int serverId, WorldType worldType);
         Task<int> GetWorldIdAsync(int serverId, WorldType worldType);
         Task CreateLocationAsync(ServerLocationFormModel model, string creatorId);
+        Task EditServer (ServerEditModel model);
+        Task DeleteServer(int serverId);
         Task DeleteUserServersAsync(string userId);
     }
 }

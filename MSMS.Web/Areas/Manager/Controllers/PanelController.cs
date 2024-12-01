@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MSMS.Core.Contracts;
@@ -14,11 +15,13 @@ namespace MSMS.Web.Areas.Manager.Controllers
     {
         private readonly IServerService _serverService;
         private readonly IStatisticsService _statisticsService;
+        private readonly IMapper _mapper; 
 
-        public PanelController(IServerService serverService, IStatisticsService statisticsService)
+        public PanelController(IServerService serverService, IStatisticsService statisticsService, IMapper mapper)
         {
             _serverService = serverService;
             _statisticsService = statisticsService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -48,14 +51,36 @@ namespace MSMS.Web.Areas.Manager.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit([FromQuery]int serverId)
+        public async Task<IActionResult> Edit([FromRoute] int id)
         {
-            return View();
+            var server = await _serverService.GetServerDetailsAsync(id);
+
+            if (server == null)
+            {
+                return BadRequest();
+            }
+
+            var model = _mapper.Map<ServerEditModel>(server);
+            model.Id = id;
+            return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete([FromQuery]int serverId)
+        public async Task<IActionResult> Edit([FromForm] ServerEditModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            await _serverService.EditServer(model);
+            return RedirectToAction(nameof(Servers));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete([FromForm]int id)
+        {
+            await _serverService.DeleteServer(id);
             return RedirectToAction(nameof(Servers));
         }
 

@@ -1,0 +1,58 @@
+﻿@model ServerEditModel
+
+@{
+    ViewBag.Title = "Edit Server";
+}
+
+<div class="container mt-5">
+    <h1 class="display-2 text-center text-blocky">EDIT SERVER</h1>
+
+    <form asp-area="Manager" asp-action="Edit" asp-controller="Panel" method="post" enctype="multipart/form-data" class="mt-4">
+        <input asp-for="@Model.Id" type="hidden">
+        <div class="form-group">
+            <input asp-for="@Model.Name" class="form-control" placeholder="SERVER NAME:" />
+            <span asp-validation-for="@Model.Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input asp-for="@Model.IpAddress" class="form-control" placeholder="IP ADDRESS:" />
+            <span asp-validation-for="@Model.IpAddress" class="text-danger"></span>
+        </di>
+        <div class="form-group">
+            <select asp-for="@Model.GameVersion" class="form-control">
+                @for (var major = 1; major >= 1; major--)
+                {
+                    var minorStart = major == 1 ? 21 : 0;
+                    var minorEnd = major == 1 ? 0 : 0;
+
+                    for (var minor = minorStart; minor >= minorEnd; minor--)
+                    {
+                        var patchStart = (major == 1 && minor == 21) ? 0 : 2;
+                        var patchEnd = minor == 0 ? 0 : 0;
+
+                        for (var patch = patchStart; patch >= patchEnd; patch--)
+                        {
+                            <option value="@($"{major}.{minor}.{patch}")">@($"{major}.{minor}.{patch}")</option>
+                        }
+                    }
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <select asp-for="@Model.PlayMode" asp-items="Html.GetEnumSelectList<MSMS.Infrastructure.Data.Enums.PlayMode>()" class="form-control" aria-placeholder="SELECT PLAY MODE"></select>
+            <span asp-validation-for="@Model.PlayMode" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input asp-for="@Model.Description" class="form-control" placeholder="DESCRIPTION: "></textarea>
+            <span asp-validation-for="@Model.Description" class="text-danger"></span>
+        </div>
+        <div class="d-flex justify-content-center mt-4">
+            <button type="submit" class="btn btn-primary btn-xl">EDIT SERVER</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
