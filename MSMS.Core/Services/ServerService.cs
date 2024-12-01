@@ -20,9 +20,14 @@ namespace MSMS.Core.Services
             _mapper = mapper;
         }
 
-        public async Task<AllServersQueryModel> AllServersAsync(string? searchItem = null, SortingType sortingType = SortingType.Newest, int currentPage = 1, int serversPerPage = 9)
+        public async Task<AllServersQueryModel> AllServersAsync(string? ownerId = null, string? searchItem = null, SortingType sortingType = SortingType.Newest, int currentPage = 1, int serversPerPage = 9)
         {
             IQueryable<Server> servers = _repository.AllReadOnly<Server>().Include(s => s.Owner);
+
+            if (ownerId != null)
+            {
+                servers = _repository.AllReadOnly<Server>().Where(s => s.OwnerId == ownerId).Include(s => s.Owner);
+            }
 
             if (searchItem != null)
             {
@@ -83,6 +88,35 @@ namespace MSMS.Core.Services
             ];
 
             await _repository.AddAsync(entity);
+            await _repository.SaveChangesAsync();
+        }
+
+        public async Task DeleteServer(int serverId)
+        {
+            var server = await _repository.GetByIdAsync<Server>(serverId);
+            if (server != null)
+            {
+                await _repository.RemoveAsync(server);
+                await _repository.SaveChangesAsync();
+            }
+        }
+
+        public async Task DeleteUserServersAsync(string userId)
+        {
+            var servers = await _repository.All<Server>().Where(s => s.OwnerId == userId).ToListAsync();
+            await _repository.RemoveRangeAsync(servers);
+            await _repository.SaveChangesAsync();
+        }
+
+        public async Task EditServer(ServerEditModel model)
+        {
+            var server = await _repository.All<Server>().FirstOrDefaultAsync(s => s.Id == model.Id);
+            if (server == null)
+            {
+                return;
+            }
+
+            _mapper.Map(model, server);
             await _repository.SaveChangesAsync();
         }
 
@@ -154,6 +188,11 @@ namespace MSMS.Core.Services
             return await _repository
                 .AllReadOnly<Server>()
                 .AnyAsync(s => s.IpAddress == ip);
+        }
+
+        public async Task<bool> ServerHasOwner(int serverId, string ownerId)
+        {
+            return await _repository.AllReadOnly<Server>().FirstOrDefaultAsync(s => s.Id == serverId && s.OwnerId == ownerId) != null;
         }
     }
 }

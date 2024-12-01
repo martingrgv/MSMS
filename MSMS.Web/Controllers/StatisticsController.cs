@@ -1,7 +1,6 @@
-using System;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using MSMS.Core.Contracts;
 
 namespace MSMS.Web.Controllers;
@@ -27,5 +26,17 @@ public class StatisticsController : BaseController
     public async Task<ActionResult<int>> RegisteredUsersCount()
     {
         return await _statisticsService.RegisteredUsersCountAsync();
+    }
+
+    [HttpGet("/api/statistics/serversCount")]
+    public async Task<ActionResult<int>> UserServersCount()
+    {
+        return await _statisticsService.UserServersCountAsync(User.Id());
+    }
+
+    [HttpGet("/api/statistics/serverUsersCount")]
+    public async Task<ActionResult<int>> UserServersUsersCount()
+    {
+        return await _statisticsService.UserServersUsersCountAsync(User.Id());
     }
 }

@@ -19,6 +19,12 @@
                 <li class="nav-item">
                     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">SUPPORT</a>
                 </li>
+                @if (User.IsInRole(nameof(Role.Owner)))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="Manager" asp-controller="Panel" asp-action="Controls">OWNERS PANEL</a>
+                    </li>
+                }
             </ul>
             <partial name="_LoginPartial" />
         </div>

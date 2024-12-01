@@ -15,6 +15,7 @@ namespace MSMS.Web
             builder.Services.AddServices();
             builder.Services.AddDbContext(builder.Configuration);
             builder.Services.AddIdentity();
+            builder.Services.ConfigureRoleClaim();
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
@@ -37,7 +38,12 @@ namespace MSMS.Web
 
             app.UseAuthentication();
             app.UseAuthorization();
+            app.AddRoles();
 
+            app.MapControllerRoute(
+                name: "areas",
+                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+            );
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
