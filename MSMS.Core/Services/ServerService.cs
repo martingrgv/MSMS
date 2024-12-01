@@ -20,9 +20,14 @@ namespace MSMS.Core.Services
             _mapper = mapper;
         }
 
-        public async Task<AllServersQueryModel> AllServersAsync(string? searchItem = null, SortingType sortingType = SortingType.Newest, int currentPage = 1, int serversPerPage = 9)
+        public async Task<AllServersQueryModel> AllServersAsync(string? ownerId = null, string? searchItem = null, SortingType sortingType = SortingType.Newest, int currentPage = 1, int serversPerPage = 9)
         {
             IQueryable<Server> servers = _repository.AllReadOnly<Server>().Include(s => s.Owner);
+
+            if (ownerId != null)
+            {
+                servers = _repository.AllReadOnly<Server>().Where(s => s.OwnerId == ownerId).Include(s => s.Owner);
+            }
 
             if (searchItem != null)
             {

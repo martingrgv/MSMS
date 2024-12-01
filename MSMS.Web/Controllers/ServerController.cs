@@ -32,6 +32,7 @@ namespace MSMS.Web.Controllers
         public async Task<IActionResult> All([FromQuery]AllServersQueryModel query)
         {
             var model = await _serverService.AllServersAsync(
+                null,
                 query.SearchItem,
                 query.SortingType,
                 query.CurrentPage,

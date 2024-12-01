@@ -22,7 +22,7 @@ namespace MSMS.Web.Areas.Manager.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Controls()
+        public async Task<IActionResult> Controls()
         {
             var serversCount = await _statisticsService.UserServersCountAsync(User.Id());
             var usersCount = await _statisticsService.RegisteredUsersCountAsync();
@@ -35,13 +35,32 @@ namespace MSMS.Web.Areas.Manager.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Servers()
+        public async Task<IActionResult> Servers([FromQuery]AllServersQueryModel query)
+        {
+            var model = await _serverService.AllServersAsync(
+                User.Id(),
+                query.SearchItem,
+                query.SortingType,
+                query.CurrentPage,
+                AllServersQueryModel.ServersPerPage
+            );
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit([FromQuery]int serverId)
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<ActionResult> DeleteUserServers()
+        public async Task<IActionResult> Delete([FromQuery]int serverId)
+        {
+            return RedirectToAction(nameof(Servers));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteUserServers()
         {
             await _serverService.DeleteUserServersAsync(User.Id());
             return RedirectToAction(nameof(Controls));
