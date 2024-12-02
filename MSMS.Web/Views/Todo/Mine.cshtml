@@ -1,0 +1,52 @@
+﻿@model IEnumerable<TodoItemViewModel>
+
+@{
+    ViewBag.Title = "Todo";
+    var incompleteTasks = Model.Where(t => t.isCompleted == false); 
+}
+
+<div class="container my-5">
+    <h2 class="text-center  mb-4">To-Do List</h2>
+    <form asp-controller="Todo" asp-action="Add" method="post" class="mb-3">
+        <div class="d-flex justify-content-center align-items-center ">
+            <input class="form-control" />
+            <button class="btn btn-primary p-2 " type="submit" style="padding: .92rem!important">ADD</button>
+        </div>
+    </form>
+
+    <form asp-controller="Todo" asp-action="DeleteCompleted" method="post">
+        <button class="btn btn-danger " type="submit">DELETE COMPLETED</button>
+    </form>
+    <div class="mt-3">
+        <ul class="list-group list-group-numbered">
+            @foreach (var todo in incompleteTasks)
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-center text-white mb-1" style="background-color: #262423;">
+                    @todo.Name
+                    <form asp-controller="Todo" asp-action="CompleteTask" method="post">
+                        <button type="submit" class="btn btn-primary ">COMPLETE</button>
+                    </form>
+                </li>
+            }
+        </ul>
+
+        @{
+            var completedTasks = Model.Where(t => t.isCompleted);
+        }
+        @if (completedTasks.Any())
+        {
+            <h4 class="text-center text-blocky mb-4">Completed Tasks</h4>
+            <ul class="list-group list-group-numbered mb-1">
+                @foreach (var todo in completedTasks)
+                {
+                    <li class="list-group-item d-flex justify-content-between align-items-center text-white" style="background-color: #262423;">
+                        @todo.Name
+                        <form asp-controller="Todo" asp-action="CompleteTask" method="post">
+                            <button type="submit" class="btn btn-primary ">COMPLETE</button>
+                        </form>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+</div>
