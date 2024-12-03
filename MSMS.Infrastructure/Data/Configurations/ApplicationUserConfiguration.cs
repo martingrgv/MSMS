@@ -16,7 +16,8 @@ namespace MSMS.Infrastructure.Data.Configurations
             builder.Property(x => x.Email).IsRequired();
             builder.Property(x => x.PasswordHash).IsRequired();
 
-            builder.HasData(DbSeeder.SeedUsers());
+            var seeder = new DbSeeder();
+            builder.HasData(new ApplicationUser [] { seeder.GuestUser, seeder.CreatorUser });
         }
     }
 }

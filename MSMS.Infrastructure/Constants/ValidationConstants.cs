@@ -32,6 +32,6 @@
         public const int TODO_LIST_NAME_MIN_LENGTH = 3;
         public const int TODO_LIST_NAME_MAX_LENGTH = 15;
         public const int TODO_NAME_MIN_LENGTH = 3;
-        public const int TODO_NAME_MAX_LENGTH = 15;
+        public const int TODO_NAME_MAX_LENGTH = 80;
     }
 } 

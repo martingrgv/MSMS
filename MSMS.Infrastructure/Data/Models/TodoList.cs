@@ -9,9 +9,6 @@ public class TodoList
     [Key]
     public int Id { get; set; }
 
-    [MaxLength(TODO_LIST_NAME_MAX_LENGTH)]
-    public string Name { get; set; } = null!;
-
     [Required]
     public string CreatorId { get; set; } = null!;
 
