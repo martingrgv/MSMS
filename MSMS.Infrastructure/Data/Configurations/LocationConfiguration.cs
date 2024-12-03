@@ -15,7 +15,8 @@ namespace MSMS.Infrastructure.Data.Configurations
                 .HasForeignKey(l => l.WorldId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            builder.HasData(DbSeeder.SeedLocations());
+            var seeder = new DbSeeder();
+            builder.HasData(new Location[] { seeder.CreatorOverworldLocation, seeder.CreatorNetherLocation, seeder.CreatorEndLocation });
         }
     }
 }

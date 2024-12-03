@@ -4,13 +4,36 @@ using MSMS.Infrastructure.Data.Models;
 
 namespace MSMS.Infrastructure.Data.Seeder
 {
-    public static class DbSeeder
+    public class DbSeeder
     {
-        public static ApplicationUser[] SeedUsers()
+        public ApplicationUser GuestUser { get; set; } = null!;
+        public ApplicationUser CreatorUser { get; set; } = null!; 
+        public Server CreatorServer { get; set; } = null!;
+        public World CreatorOverworld { get; set; } = null!;
+        public World CreatorNether { get; set; } = null!;
+        public World CreatorEnd { get; set; } = null!;
+        public Location CreatorOverworldLocation { get; set; } = null!;
+        public Location CreatorNetherLocation { get; set; } = null!;
+        public Location CreatorEndLocation { get; set; } = null!;
+
+        public DbSeeder()
+        {
+            SeedDb();
+        }
+
+        private void SeedDb()
+        {
+            SeedUsers();
+            SeedServers();
+            SeedWorlds();
+            SeedLocations();
+        }
+
+        private void SeedUsers()
         {
             var hasher = new PasswordHasher<ApplicationUser>();
 
-            var guestUser = new ApplicationUser
+            GuestUser = new ApplicationUser
             {
                 Id = "091a0932-5bea-4155-9ad1-db73e28aa455",
                 UserName = "guest",
@@ -20,7 +43,10 @@ namespace MSMS.Infrastructure.Data.Seeder
                 FirstName = "Madman",
                 LastName = "Waller"
             };
-            var serverCreator = new ApplicationUser
+
+            GuestUser.PasswordHash = hasher.HashPassword(GuestUser, "guest123");
+
+            CreatorUser = new ApplicationUser
             {
                 Id = "13c6c731-7d69-4db3-a3c8-1d0b77f2d26a",
                 UserName = "creator",
@@ -31,15 +57,12 @@ namespace MSMS.Infrastructure.Data.Seeder
                 LastName = "Smith"
             };
 
-            guestUser.PasswordHash = hasher.HashPassword(guestUser, "guest123");
-            serverCreator.PasswordHash = hasher.HashPassword(serverCreator, "creator123");
-
-            return new [] { guestUser, serverCreator };
+            CreatorUser.PasswordHash = hasher.HashPassword(CreatorUser, "creator123");
         }
 
-        public static Server[] SeedServers()
+        private void SeedServers()
         {
-            var creatorServer = new Server
+            CreatorServer = new Server
             {
                 Id = 1,
                 Name = "My Server",
@@ -49,43 +72,36 @@ namespace MSMS.Infrastructure.Data.Seeder
                 PlayMode = PlayMode.Survival,
                 Description = "This is my first created server!",
                 OwnerId = "13c6c731-7d69-4db3-a3c8-1d0b77f2d26a",
-                Worlds =
-                {
-                }
             };
-
-            return new [] { creatorServer };
         }
 
-        public static World[] SeedWorlds()
+        private void SeedWorlds()
         {
-            var overworld = new World(WorldType.Overworld)
+            CreatorOverworld = new World(WorldType.Overworld)
             {
                 Id = 1,
                 Seed = null,
                 ServerId = 1,
             };
 
-            var nether = new World (WorldType.Nether)
+            CreatorNether = new World (WorldType.Nether)
             {
                 Id = 2,
                 Seed = null,
                 ServerId = 1,
             };
 
-            var end = new World(WorldType.End)
+            CreatorEnd = new World(WorldType.End)
             {
                 Id = 3,
                 Seed = null,
                 ServerId = 1,
             };
-
-            return new [] { overworld, nether, end };
         }
 
-        public static Location[] SeedLocations()
+        private void SeedLocations()
         {
-            var overworld = new Location
+            CreatorOverworldLocation = new Location
             {
                 Id = 1,
                 Name = "My Overworld Location",
@@ -97,7 +113,7 @@ namespace MSMS.Infrastructure.Data.Seeder
                 WorldId = 1
             };
              
-             var nether = new Location
+             CreatorNetherLocation = new Location
             {
                 Id = 2,
                 Name = "My Nether Location",
@@ -109,7 +125,7 @@ namespace MSMS.Infrastructure.Data.Seeder
                 WorldId = 2
             };
 
-            var end = new Location
+            CreatorEndLocation = new Location
             {
                 Id = 3,
                 Name = "My End Location",
@@ -120,8 +136,6 @@ namespace MSMS.Infrastructure.Data.Seeder
                 CreatorId = "13c6c731-7d69-4db3-a3c8-1d0b77f2d26a",
                 WorldId = 3
             };
-
-            return new [] { overworld, nether, end };
         }
     }
 }

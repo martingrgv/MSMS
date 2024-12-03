@@ -4,6 +4,7 @@ using MSMS.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MSMS.Infrastructure.Migrations
 {
     [DbContext(typeof(MSMSDbContext))]
-    partial class MSMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241203200948_TodoListNameRemove")]
+    partial class TodoListNameRemove
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,7 +109,7 @@ namespace MSMS.Infrastructure.Migrations
                         {
                             Id = "091a0932-5bea-4155-9ad1-db73e28aa455",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3a85bf16-3651-4c2b-aacd-769cec6ec45b",
+                            ConcurrencyStamp = "f6288136-62a1-4311-84db-7ad9f5c9e5e9",
                             Email = "guest@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Madman",
@@ -114,9 +117,9 @@ namespace MSMS.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "GUEST@MAIL.COM",
                             NormalizedUserName = "GUEST",
-                            PasswordHash = "AQAAAAIAAYagAAAAEIYj1kQ0k/obq2/SBl0RkWzr59iBSppfOI998Ya9Ygv1zyndvl7ZOTWNKVXfmKB8qw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBeon0fhpOl7bYHQFOUVTsUUEiTo0lpyfHbVCAmwex3qiXJrUDs5Ni0KdqqZ6FJUyg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b108b802-8bb5-4a0f-b527-2eccb9d5f743",
+                            SecurityStamp = "61716790-4c17-4fe9-8b8d-c4ab9b1cb18d",
                             TwoFactorEnabled = false,
                             UserName = "guest"
                         },
@@ -124,7 +127,7 @@ namespace MSMS.Infrastructure.Migrations
                         {
                             Id = "13c6c731-7d69-4db3-a3c8-1d0b77f2d26a",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b1d52c5b-2206-4f3e-ae89-b926d4460565",
+                            ConcurrencyStamp = "a628427a-2a45-4e69-9121-84ac4b0dd412",
                             Email = "creator@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Willson",
@@ -132,9 +135,9 @@ namespace MSMS.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "CREATOR@MAIL.COM",
                             NormalizedUserName = "CREATOR",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKmCxPhn/nZEnIVEokQOHyEoec4Qs1B+a4rwOr92GktB1XcmK/NxvbH6JOW77nr1mQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHBGjv4+fHzAQWZh2HVtsPKRAxYoqrZ2y/p7V4foRn1lHbjrNdtXlJ5FktaadcXoKA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2fe328e2-cd6c-4179-b56f-44c0583cfa16",
+                            SecurityStamp = "3ab91edc-a115-4d40-b95c-0f5e79c6becf",
                             TwoFactorEnabled = false,
                             UserName = "creator"
                         });
@@ -290,8 +293,8 @@ namespace MSMS.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(80)
-                        .HasColumnType("nvarchar(80)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<int>("TodoListId")
                         .HasColumnType("int");

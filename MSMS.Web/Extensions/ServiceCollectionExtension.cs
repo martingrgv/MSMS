@@ -19,6 +19,7 @@ namespace MSMS.Web.Extensions
             serviceCollection.AddAutoMapper(typeof(ServerProfile).Assembly);
             serviceCollection.AddScoped<IServerService, ServerService>();
             serviceCollection.AddScoped<IStatisticsService, StatisticsService>();
+            serviceCollection.AddScoped<ITodoService, TodoService>();
 
             return serviceCollection;
         }

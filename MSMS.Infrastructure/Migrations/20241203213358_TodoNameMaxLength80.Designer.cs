@@ -4,6 +4,7 @@ using MSMS.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MSMS.Infrastructure.Migrations
 {
     [DbContext(typeof(MSMSDbContext))]
-    partial class MSMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241203213358_TodoNameMaxLength80")]
+    partial class TodoNameMaxLength80
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

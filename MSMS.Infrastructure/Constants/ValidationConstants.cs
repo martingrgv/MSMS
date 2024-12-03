@@ -27,5 +27,11 @@
         public const int LOCATION_NAME_MAX_LENGTH = 50;
         public const int LOCATION_COORDINATES_MIN_LENGTH = 3;
         public const int LOCATION_COORDINATES_MAX_LENGTH = 24;
+
+        // Todo List
+        public const int TODO_LIST_NAME_MIN_LENGTH = 3;
+        public const int TODO_LIST_NAME_MAX_LENGTH = 15;
+        public const int TODO_NAME_MIN_LENGTH = 3;
+        public const int TODO_NAME_MAX_LENGTH = 80;
     }
 } 
