@@ -7,7 +7,7 @@
             <h5 class="card-title">@Model.Name</h5>
             <p class="card-text">IP: @Model.IpAddress</p>
             <p>Owner: @Model.OwnerName</p>
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center gap-2">
                 <a asp-controller="Server" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-primary">DETAILS</a>
                 <a asp-area="Manager" asp-controller="Panel" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">EDIT</a>
                 <form asp-area="Manager" asp-controller="Panel" asp-action="Delete" method="post">
@@ -15,6 +15,7 @@
                     <button type="submit" class="btn btn-danger">DELETE</button>
                 </form>
             </div>
+            <hr />
         </div>
     </div>
 </div>
