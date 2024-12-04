@@ -8,7 +8,7 @@
 
 <div class="container my-5">
         <h2 class=" mb-4">To-Do List</h2>
-        <form asp-controller="Todo" asp-action="Add" method="post" class="mb-3">
+        <form asp-controller="Todo" asp-action="Add" method="post" class="mb-3" autocomplete="off">
             <div class="d-flex justify-content-center align-items-center ">
                 <input asp-for="@Model.TodoCreateModel.Name" class="form-control" />
                 <span asp-validation-for="@Model.TodoCreateModel.Name" class="text-danger"></span>

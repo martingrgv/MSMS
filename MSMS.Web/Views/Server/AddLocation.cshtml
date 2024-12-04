@@ -6,7 +6,7 @@
 <div class="container mt-5">
     <h1 class="display-2 text-center text-blocky">NEW LOCATION</h1>
 
-    <form asp-action="AddLocation" asp-controller="Server" method="post" class="mt-4">
+    <form asp-action="AddLocation" asp-controller="Server" method="post" class="mt-4" autocomplete="off">
         <div class="form-group">
             <input asp-for="@Model.Name" class="form-control" placeholder="LOCATION NAME:" />
             <span asp-validation-for="@Model.Name" class="text-danger"></span>

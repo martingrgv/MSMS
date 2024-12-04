@@ -7,7 +7,7 @@
 <div class="container mt-5">
     <h1 class="display-2 text-center text-blocky">EDIT SERVER</h1>
 
-    <form asp-area="Manager" asp-action="Edit" asp-controller="Panel" method="post" enctype="multipart/form-data" class="mt-4">
+    <form asp-area="Manager" asp-action="Edit" asp-controller="Panel" method="post" enctype="multipart/form-data" class="mt-4" autocomplete="off">
         <input asp-for="@Model.Id" type="hidden">
         <div class="form-group">
             <input asp-for="@Model.Name" class="form-control" placeholder="SERVER NAME:" />
