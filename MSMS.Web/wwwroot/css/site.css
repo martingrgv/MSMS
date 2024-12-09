@@ -377,6 +377,10 @@ hr {
   background-color: #193910;
 }
 
+.form-control:disabled, .form-control[readonly] {
+    background-color: #393939;
+}
+
 #totalServersStatistic {
     position: absolute;
     bottom: 0;
