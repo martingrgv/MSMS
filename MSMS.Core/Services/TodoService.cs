@@ -39,17 +39,17 @@ public class TodoService : ITodoService
         await _repository.SaveChangesAsync();
     }
 
-    public async Task<TodoViewModel> AllTodosAsync(string userId)
+    public Task<TodoViewModel> AllTodosAsync(string userId)
     {
-        var todoList = await _repository.AllReadOnly<TodoList>().Include(t => t.TodoItems).FirstOrDefaultAsync(tl => tl.CreatorId == userId);
+        var todoList = _repository.AllReadOnly<TodoList>().Include(t => t.TodoItems).FirstOrDefault(tl => tl.CreatorId == userId);
 
         if (todoList == null)
         {
-            return new TodoViewModel();
+            return Task.FromResult(new TodoViewModel());
         }
 
         var todosViewModel = _mapper.Map<TodoViewModel>(todoList);
-        return todosViewModel;
+        return Task.FromResult(todosViewModel);
     }
 
     public async Task CompleteTodoAsync(int id)
@@ -97,9 +97,10 @@ public class TodoService : ITodoService
         return await _repository.GetByIdAsync<TodoItem>(id);
     }
 
-    public async Task<TodoList?> GetTodoListAsync(string userId)
+    public Task<TodoList?> GetTodoListAsync(string userId)
     {
-        return await _repository.All<TodoList>().Include(l => l.TodoItems).FirstOrDefaultAsync(t => t.CreatorId == userId);
+        var result = _repository.All<TodoList>().Include(l => l.TodoItems).FirstOrDefault(t => t.CreatorId == userId);
+        return Task.FromResult(result);
     }
 
     public async Task UncompleteTodoAsync(int id)
