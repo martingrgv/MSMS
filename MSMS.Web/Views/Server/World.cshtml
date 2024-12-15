@@ -41,6 +41,11 @@
     <tbody>
       @foreach (var location in Model.Locations )
       {
+        if (User.IsInRole(nameof(Role.Owner)) && location.AccessModifier == LocationAccessModifier.Private)
+        {
+          continue;
+        }
+
           <tr>
           <th scope="row">@location.LocationType</th>
           <td>@location.Coordinates</td>
