@@ -13,6 +13,8 @@ namespace MSMS.Infrastructure.Data
         public DbSet<Server> Servers { get; set; } = null!;
         public DbSet<World> World { get; set; } = null!;
         public DbSet<Location> Locations { get; set; } = null!;
+        public DbSet<TodoList> TodoLists { get; set; } = null!;
+        public DbSet<TodoItem> TodoItems { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

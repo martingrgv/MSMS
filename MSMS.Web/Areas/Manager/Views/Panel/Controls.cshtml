@@ -1,0 +1,36 @@
+﻿@model ManagerPanelStatisticsViewModel
+
+@{
+    ViewBag.Title = "Owner Panel";
+}
+
+
+<div class="container mt-5">
+    <h1 class="display-2 text-center text-blocky">MANAGER PANEL</h1>
+
+    <div class="d-flex flex-wrap justify-content-center align-items-center mt-5 mb-5 gap-5">
+        <div>
+            <div class="panel">
+                <h2>Servers: @Model.ServersCount</h2>
+            </div>
+            <hr />
+        </div>
+        <div>
+            <div class="panel">
+                <h2>Players: @Model.TotalServersUsersCount</h2>
+            </div>
+            <hr />
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center align-items-center flex-column  gap-3">
+        <a asp-area="" asp-controller="Server" asp-action="Create" class="btn btn-primary btn-lg"
+            style="width: 20rem;">CREATE NEW SERVER</a>
+        <a asp-area="Manager" asp-controller="Panel" asp-action="Servers" class="btn btn-warning btn-lg"
+            style="width: 20rem;">MY SERVERS</a>
+
+        <form asp-area="Manager" asp-controller="Panel" asp-action="DeleteUserServers" method="post">
+            <button type="submit" class="btn btn-danger btn-lg" style="width: 20rem;">DELETE ALL SERVERS</button>
+        </form>
+    </divo>
+</div>

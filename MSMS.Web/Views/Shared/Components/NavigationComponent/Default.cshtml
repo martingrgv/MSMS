@@ -11,14 +11,17 @@
                     <a class="nav-link" asp-area="" asp-controller="Server" asp-action="All">SERVERS</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">TODO</a>
+                    <a class="nav-link" asp-area="" asp-controller="Todo" asp-action="Mine">TODO</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">PORTAL TOOL</a>
+                    <a class="nav-link" asp-area="" asp-controller="PortalTool" asp-action="Tool">PORTAL TOOL</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">SUPPORT</a>
-                </li>
+                @if (User.IsInRole(nameof(Role.Owner)))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="Manager" asp-controller="Panel" asp-action="Controls">OWNERS PANEL</a>
+                    </li>
+                }
             </ul>
             <partial name="_LoginPartial" />
         </div>

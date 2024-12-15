@@ -10,7 +10,8 @@ namespace MSMS.Infrastructure.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<World> builder)
         {
-            builder.HasData(DbSeeder.SeedWorlds());
+            var seeder = new DbSeeder();
+            builder.HasData(new World[] { seeder.CreatorOverworld, seeder.CreatorNether, seeder.CreatorEnd });
         }
     }
 }

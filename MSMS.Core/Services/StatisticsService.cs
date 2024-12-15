@@ -15,13 +15,25 @@ public class StatisticsService : IStatisticsService
         _repository = repository;
     }
 
-    public async Task<int> RegisteredUsersCountAsync()
+    public Task<int> RegisteredUsersCountAsync()
     {
-        return await _repository.AllReadOnly<ApplicationUser>().CountAsync();
+        int count = _repository.AllReadOnly<ApplicationUser>().Count();
+        return Task.FromResult(count);
     }
 
-    public async Task<int> ServersCountAsync()
+    public Task<int> ServersCountAsync()
     {
-        return await _repository.AllReadOnly<Server>().CountAsync();
+        int count = _repository.AllReadOnly<Server>().Count();
+        return Task.FromResult(count);
+    }
+
+    public async Task<int> UserServersCountAsync(string userId)
+    {
+        return await _repository.AllReadOnly<Server>().Where(s => s.OwnerId == userId).CountAsync();
+    }
+
+    public async Task<int> UserServersUsersCountAsync(string userId)
+    {
+        throw new NotImplementedException();
     }
 }

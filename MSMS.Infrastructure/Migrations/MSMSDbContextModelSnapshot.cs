@@ -106,7 +106,7 @@ namespace MSMS.Infrastructure.Migrations
                         {
                             Id = "091a0932-5bea-4155-9ad1-db73e28aa455",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2e46f2fb-8e82-4aa5-800c-88b733fcc805",
+                            ConcurrencyStamp = "3a85bf16-3651-4c2b-aacd-769cec6ec45b",
                             Email = "guest@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Madman",
@@ -114,9 +114,9 @@ namespace MSMS.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "GUEST@MAIL.COM",
                             NormalizedUserName = "GUEST",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPohxZ/xCIvC9beKJhHueKSFUdJaALVHOC8rIuzzcRtOjHeu/50OfTuyL7L0fv0F+Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIYj1kQ0k/obq2/SBl0RkWzr59iBSppfOI998Ya9Ygv1zyndvl7ZOTWNKVXfmKB8qw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "fa4f4ff3-1480-4b02-9dd5-605f661fcee8",
+                            SecurityStamp = "b108b802-8bb5-4a0f-b527-2eccb9d5f743",
                             TwoFactorEnabled = false,
                             UserName = "guest"
                         },
@@ -124,7 +124,7 @@ namespace MSMS.Infrastructure.Migrations
                         {
                             Id = "13c6c731-7d69-4db3-a3c8-1d0b77f2d26a",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a9ba62c0-2ac4-4d54-a610-3f301a8948a1",
+                            ConcurrencyStamp = "b1d52c5b-2206-4f3e-ae89-b926d4460565",
                             Email = "creator@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Willson",
@@ -132,9 +132,9 @@ namespace MSMS.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "CREATOR@MAIL.COM",
                             NormalizedUserName = "CREATOR",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOuSlaGwh3X7RsfGu4QtPlxsa+XEnic1bSQP4g1aP8DRs+8Xn24XrGfYgL/itCsTUA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKmCxPhn/nZEnIVEokQOHyEoec4Qs1B+a4rwOr92GktB1XcmK/NxvbH6JOW77nr1mQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9dfabb10-f107-4a0f-bac9-76139ed358b9",
+                            SecurityStamp = "2fe328e2-cd6c-4179-b56f-44c0583cfa16",
                             TwoFactorEnabled = false,
                             UserName = "creator"
                         });
@@ -198,7 +198,7 @@ namespace MSMS.Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            AccessModifier = 2,
+                            AccessModifier = 1,
                             Coordinates = "250/250/250",
                             CreatorId = "13c6c731-7d69-4db3-a3c8-1d0b77f2d26a",
                             Description = "Portal to home",
@@ -275,6 +275,51 @@ namespace MSMS.Infrastructure.Migrations
                             OwnerId = "13c6c731-7d69-4db3-a3c8-1d0b77f2d26a",
                             PlayMode = 0
                         });
+                });
+
+            modelBuilder.Entity("MSMS.Infrastructure.Data.Models.TodoItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
+
+                    b.Property<int>("TodoListId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TodoListId");
+
+                    b.ToTable("TodoItems");
+                });
+
+            modelBuilder.Entity("MSMS.Infrastructure.Data.Models.TodoList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
+
+                    b.ToTable("TodoLists");
                 });
 
             modelBuilder.Entity("MSMS.Infrastructure.Data.Models.World", b =>
@@ -494,6 +539,28 @@ namespace MSMS.Infrastructure.Migrations
                     b.Navigation("Owner");
                 });
 
+            modelBuilder.Entity("MSMS.Infrastructure.Data.Models.TodoItem", b =>
+                {
+                    b.HasOne("MSMS.Infrastructure.Data.Models.TodoList", "TodoList")
+                        .WithMany("TodoItems")
+                        .HasForeignKey("TodoListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TodoList");
+                });
+
+            modelBuilder.Entity("MSMS.Infrastructure.Data.Models.TodoList", b =>
+                {
+                    b.HasOne("MSMS.Infrastructure.Data.Models.ApplicationUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Creator");
+                });
+
             modelBuilder.Entity("MSMS.Infrastructure.Data.Models.World", b =>
                 {
                     b.HasOne("MSMS.Infrastructure.Data.Models.Server", "Server")
@@ -559,6 +626,11 @@ namespace MSMS.Infrastructure.Migrations
             modelBuilder.Entity("MSMS.Infrastructure.Data.Models.Server", b =>
                 {
                     b.Navigation("Worlds");
+                });
+
+            modelBuilder.Entity("MSMS.Infrastructure.Data.Models.TodoList", b =>
+                {
+                    b.Navigation("TodoItems");
                 });
 
             modelBuilder.Entity("MSMS.Infrastructure.Data.Models.World", b =>

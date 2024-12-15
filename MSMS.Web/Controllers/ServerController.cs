@@ -1,29 +1,48 @@
 ﻿using Humanizer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using MSMS.Core.Contracts;
 using MSMS.Core.Models;
 using MSMS.Infrastructure.Data.Enums;
+using MSMS.Infrastructure.Data.Models;
 using System.Security.Claims;
 
 namespace MSMS.Web.Controllers
 {
     public class ServerController : BaseController
     {
+        private const int serversPerPage = 9;
         private IServerService _serverService;
+        private IStatisticsService _statisticsService;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public ServerController(IServerService serverService)
+        public ServerController(IServerService serverService, IStatisticsService statisticsService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _serverService = serverService;
+            _statisticsService = statisticsService;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All([FromQuery]AllServersQueryModel query)
         {
-            var models = await _serverService.AllServersAsync();
-            return View(models);
+            var model = await _serverService.AllServersAsync(
+                null,
+                query.SearchItem,
+                query.SortingType,
+                query.CurrentPage,
+                AllServersQueryModel.ServersPerPage
+            );
+
+            query.TotalServersCount = model.TotalServersCount;
+            query.Servers = model.Servers;
+
+            return View(query);
         }
 
         [HttpGet]
@@ -82,6 +101,19 @@ namespace MSMS.Web.Controllers
             }
 
             await _serverService.CreateServerAsync(model, imagePath, User.Id());
+
+            var applicationUser = await User.GetApplicationUser(_userManager);
+            if (applicationUser == null)
+            {
+                throw new InvalidOperationException("Could not add user to role! User could not be found.");
+            }
+
+            if (await _userManager.IsInRoleAsync(applicationUser, nameof(Role.Owner)) == false)
+            {
+                await _userManager.AddToRoleAsync(applicationUser, nameof(Role.Owner));
+                await _signInManager.RefreshSignInAsync(applicationUser);
+            }
+
             return RedirectToAction(nameof(All));
         }
 
@@ -106,8 +138,14 @@ namespace MSMS.Web.Controllers
 
         [HttpGet]
         [Route("Server/{id}/{worldType}/AddLocation/{worldId}")]
+        [Authorize(Roles = nameof(Role.Owner))]
         public async Task<IActionResult> AddLocation([FromRoute] int id, string worldType, int worldId)
         {
+            if (await _serverService.ServerHasOwner(id, User.Id()) == false)
+            {
+                return Unauthorized();
+            }
+
             if (ModelState.IsValid == false)
             {
                 return BadRequest(ModelState);

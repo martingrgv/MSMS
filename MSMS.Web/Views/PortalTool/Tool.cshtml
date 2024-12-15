@@ -1,0 +1,123 @@
+﻿@{
+    ViewBag.Title = "Portal Tool";
+}
+
+<div class="container mt-5">
+    <div id="alert-container" class="alert alert-danger" role="alert">
+    </div>
+
+    <h1 class="display-2 text-center text-blocky">Portal Tool</h1>
+
+    <div class="row mb-3">
+        <h4 class="display-4 text-center text-blocky">OVERWORLD</h4>
+        <div class="form-group col-sm">
+            <input id="overworld-textbox-x" class="form-control" placeholder="X:">
+        </div>
+        <div class="form-group col-sm">
+            <input id="overworld-textbox-y" class="form-control" placeholder="Y:">
+        </div>
+        <div class="form-group col-sm">
+            <input id="overworld-textbox-z" class="form-control" placeholder="Z:">
+        </div>
+    </div>
+    <div class="row">
+        <h4 class="display-4 text-center text-blocky">NETHER</h4>
+        <div class="form-group col-sm">
+            <input id="nether-textbox-x" class="form-control" placeholder="X:">
+        </div>
+        <div class="form-group col-sm">
+            <input id="nether-textbox-y" class="form-control" placeholder="Y:">
+        </div>
+        <div class="form-group col-sm">
+            <input id="nether-textbox-z" class="form-control" placeholder="Z:">
+        </div>
+    </div>
+    <div class="row mt-4 mb-3">
+        <div class="col-md-2 mb-3">
+            <button id="btn-clear" class="btn btn-primary btn-lg">Clear</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        window.onload = function(){
+            document.getElementById('alert-container').style.display = 'none'
+        }
+
+        const overworldTextBoxX = document.getElementById('overworld-textbox-x')
+        const overworldTextBoxY = document.getElementById('overworld-textbox-y')
+        const overworldTextBoxZ = document.getElementById('overworld-textbox-z')
+        const netherTextBoxX = document.getElementById('nether-textbox-x')
+        const netherTextBoxY = document.getElementById('nether-textbox-y')
+        const netherTextBoxZ = document.getElementById('nether-textbox-z')
+
+        const overworldTextBoxes = []
+        overworldTextBoxes.push(overworldTextBoxX, overworldTextBoxY, overworldTextBoxZ)
+        const netherTextBoxes = []
+        netherTextBoxes.push(netherTextBoxX, netherTextBoxY, netherTextBoxZ)
+
+        overworldTextBoxes.forEach((e) => e.addEventListener('input', function(){
+            this.value = validateInputValue(this.value)
+        }))
+
+        netherTextBoxes.forEach((e) => e.addEventListener('input', function(){
+            this.value = validateInputValue(this.value)
+        }))
+
+        overworldTextBoxX.addEventListener('input', function(){
+            netherTextBoxX.value = Math.floor(this.value / 8); 
+        })
+        overworldTextBoxY.addEventListener('input', function(){
+            netherTextBoxY.value = this.value; 
+        })
+        overworldTextBoxZ.addEventListener('input', function(){
+            netherTextBoxZ.value = Math.floor(this.value / 8); 
+        })
+
+        netherTextBoxX.addEventListener('input', function(){
+            overworldTextBoxX.value = Math.floor(this.value * 8); 
+        })
+        netherTextBoxY.addEventListener('input', function(){
+            
+            overworldTextBoxY.value = this.value; 
+        })
+        netherTextBoxZ.addEventListener('input', function(){
+            overworldTextBoxZ.value = Math.floor(this.value * 8); 
+        })
+
+        document.getElementById("btn-clear").addEventListener('click', function(){
+            overworldTextBoxes.forEach((e) => e.disabled = false)
+            overworldTextBoxes.forEach((e) => e.value = null)
+
+            netherTextBoxes.forEach((e) => e.disabled = false)
+            netherTextBoxes.forEach((e) => e.value = null)
+        })
+
+        function validateInputValue(value){
+            const isNegative = value.includes('-')
+            if (isNegative){
+                value = value.replace(/-/g, '')
+                return '-' + value
+            }
+
+            if (/[^0-9-]/g.test(value)) {
+                validateError('Only numbers allowed!')
+                return value.replace(/[^0-9-]/g, '');
+            } 
+
+            removeValidation()
+            return value
+        }
+
+        function validateError(message){
+            document.getElementById('alert-container').style.display = 'block'
+            document.getElementById('alert-container').textContent = message
+        }
+
+        function removeValidation(){
+            document.getElementById('alert-container').style.display = 'none'
+            document.getElementById('alert-container').textContent = ''
+        }
+    </script>
+}

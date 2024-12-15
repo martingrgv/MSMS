@@ -7,7 +7,7 @@
 <div class="container mt-5">
     <h1 class="display-2 text-center text-blocky">CREATE SERVER</h1>
 
-    <form asp-action="Create" asp-controller="Server" method="post" enctype="multipart/form-data" class="mt-4">
+    <form asp-action="Create" asp-controller="Server" method="post" enctype="multipart/form-data" class="mt-4" autocomplete="off">
         <div class="form-group">
             <input asp-for="@Model.Name" class="form-control" placeholder="SERVER NAME:" />
             <span asp-validation-for="@Model.Name" class="text-danger"></span>
@@ -15,7 +15,7 @@
         <div class="form-group">
             <input asp-for="@Model.IpAddress" class="form-control" placeholder="IP ADDRESS:" />
             <span asp-validation-for="@Model.IpAddress" class="text-danger"></span>
-        </div>
+        </di>
         <div class="form-group">
             <select asp-for="@Model.GameVersion" class="form-control">
                 @for (var major = 1; major >= 1; major--)

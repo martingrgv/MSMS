@@ -10,7 +10,8 @@ namespace MSMS.Infrastructure.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Server> builder)
         {
-            builder.HasData(DbSeeder.SeedServers());
+            var seeder = new DbSeeder();
+            builder.HasData( seeder.CreatorServer );
         }
     }
 }

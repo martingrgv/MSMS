@@ -7,6 +7,7 @@ using MSMS.Core.Services;
 using MSMS.Infrastructure.Data;
 using MSMS.Infrastructure.Data.Models;
 using MSMS.Infrastructure.Common;
+using System.Security.Claims;
 
 namespace MSMS.Web.Extensions
 {
@@ -18,6 +19,7 @@ namespace MSMS.Web.Extensions
             serviceCollection.AddAutoMapper(typeof(ServerProfile).Assembly);
             serviceCollection.AddScoped<IServerService, ServerService>();
             serviceCollection.AddScoped<IStatisticsService, StatisticsService>();
+            serviceCollection.AddScoped<ITodoService, TodoService>();
 
             return serviceCollection;
         }
@@ -49,6 +51,16 @@ namespace MSMS.Web.Extensions
             })
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<MSMSDbContext>();
+
+            return serviceCollection;
+        }
+
+        public static IServiceCollection ConfigureRoleClaim(this IServiceCollection serviceCollection)
+        {
+            serviceCollection.Configure<IdentityOptions>(options => 
+            {
+                options.ClaimsIdentity.RoleClaimType = ClaimTypes.Role;
+            });
 
             return serviceCollection;
         }

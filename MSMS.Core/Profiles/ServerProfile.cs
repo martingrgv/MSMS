@@ -11,6 +11,8 @@ namespace MSMS.Core.Profiles
         public ServerProfile()
         {
             CreateMap<ServerFormModel, Server>();   
+            CreateMap<ServerDetailsViewModel, ServerEditModel>();   
+            CreateMap<ServerEditModel, Server>();   
             CreateMap<Server, ServerViewModel>()
                 .ForMember(dest => dest.OwnerName, opt => 
                     opt.MapFrom(src => src.Owner.UserName))   

@@ -9,31 +9,66 @@ using MSMS.Infrastructure.Data.Models;
 
 namespace MSMS.Core.Services
 {
-	public class ServerService : IServerService
+    public class ServerService : IServerService
     {
         private IRepository _repository;
         private IMapper _mapper;
 
         public ServerService(IRepository repository, IMapper mapper)
         {
-            _repository = repository;           
+            _repository = repository;
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<ServerViewModel>> AllServersAsync()
+        public async Task<AllServersQueryModel> AllServersAsync(string? ownerId = null, string? searchItem = null, SortingType sortingType = SortingType.Newest, int currentPage = 1, int serversPerPage = 9)
         {
-            var servers = await _repository
-                .AllReadOnly<Server>()
-                .Include(s => s.Owner)
+            IQueryable<Server> servers = _repository.AllReadOnly<Server>().Include(s => s.Owner);
+
+            if (ownerId != null)
+            {
+                servers = _repository.AllReadOnly<Server>().Where(s => s.OwnerId == ownerId).Include(s => s.Owner);
+            }
+
+            if (searchItem != null)
+            {
+                string normalizedSearch = searchItem.ToUpper();
+                servers = servers
+                    .Where(s => s.Name.ToUpper().Contains(searchItem) ||
+                        s.Owner.UserName!.ToUpper().Contains(searchItem));
+            }
+
+            servers = sortingType switch
+            {
+                SortingType.Oldest => servers.OrderBy(s => s.Id),
+                _ => servers.OrderByDescending(s => s.Id)
+            };
+
+            var serversToReturn = await servers
+                .Skip((currentPage - 1) * serversPerPage)
+                .Take(serversPerPage)
+                .Select(s => new ServerViewModel
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    ImagePath = s.ImagePath.Replace(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"), ""),
+                    IpAddress = s.IpAddress,
+                    GameVersion = s.GameVersion,
+                    PlayMode = s.PlayMode,
+                    Description = s.Description,
+                    OwnerName = s.Owner.UserName!
+                })
                 .ToListAsync();
 
-            var mappedModel = _mapper.Map<IEnumerable<ServerViewModel>>(servers);
-            return mappedModel;
+            return new AllServersQueryModel
+            {
+                TotalServersCount = servers.Count(),
+                Servers = serversToReturn
+            };
         }
 
         public async Task CreateLocationAsync(ServerLocationFormModel model, string creatorId)
         {
-            Location location = _mapper.Map<Location>(model); 
+            Location location = _mapper.Map<Location>(model);
             location.CreatorId = creatorId;
 
             await _repository.AddAsync(location);
@@ -49,15 +84,44 @@ namespace MSMS.Core.Services
             [
                 new World(WorldType.Overworld),
                 new World(WorldType.Nether),
-                new World(WorldType.End) 
+                new World(WorldType.End)
             ];
 
             await _repository.AddAsync(entity);
             await _repository.SaveChangesAsync();
         }
 
-		public async Task<ServerDetailsViewModel> GetServerDetailsAsync(int serverId)
-		{
+        public async Task DeleteServer(int serverId)
+        {
+            var server = await _repository.GetByIdAsync<Server>(serverId);
+            if (server != null)
+            {
+                await _repository.RemoveAsync(server);
+                await _repository.SaveChangesAsync();
+            }
+        }
+
+        public async Task DeleteUserServersAsync(string userId)
+        {
+            var servers = await _repository.All<Server>().Where(s => s.OwnerId == userId).ToListAsync();
+            await _repository.RemoveRangeAsync(servers);
+            await _repository.SaveChangesAsync();
+        }
+
+        public async Task EditServer(ServerEditModel model)
+        {
+            var server = await _repository.All<Server>().FirstOrDefaultAsync(s => s.Id == model.Id);
+            if (server == null)
+            {
+                return;
+            }
+
+            _mapper.Map(model, server);
+            await _repository.SaveChangesAsync();
+        }
+
+        public async Task<ServerDetailsViewModel> GetServerDetailsAsync(int serverId)
+        {
             var server = await _repository.GetByIdAsync<Server>(serverId);
 
             if (server == null)
@@ -70,7 +134,7 @@ namespace MSMS.Core.Services
 
             var mappedModel = _mapper.Map<ServerDetailsViewModel>(server);
             return mappedModel;
-		}
+        }
 
         public async Task<ServerWorldViewModel> GetServerWorldAsync(int serverId, WorldType worldType)
         {
@@ -124,6 +188,11 @@ namespace MSMS.Core.Services
             return await _repository
                 .AllReadOnly<Server>()
                 .AnyAsync(s => s.IpAddress == ip);
+        }
+
+        public async Task<bool> ServerHasOwner(int serverId, string ownerId)
+        {
+            return await _repository.AllReadOnly<Server>().FirstOrDefaultAsync(s => s.Id == serverId && s.OwnerId == ownerId) != null;
         }
     }
 }
