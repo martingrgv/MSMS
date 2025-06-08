@@ -1,7 +1,5 @@
 using MSMS.Web.Extensions;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using MSMS.Infrastructure.Data;
 
 namespace MSMS.Web
 {
@@ -11,14 +9,14 @@ namespace MSMS.Web
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
             builder.Services.AddServices();
-            builder.Services.AddDbContext(builder.Configuration);
+            builder.Services.AddPersistance(builder.Configuration);
             builder.Services.AddIdentity();
             builder.Services.ConfigureRoleClaim();
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
+            app.ApplyMigrations();
 
             if (app.Environment.IsDevelopment())
             {

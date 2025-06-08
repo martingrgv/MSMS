@@ -6,6 +6,6 @@ namespace MSMS.Core.Models;
 public class TodoCreateModel
 {
     [Required]
-    [StringLength(TODO_NAME_MAX_LENGTH, MinimumLength = TODO_NAME_MIN_LENGTH, ErrorMessage = "Todo must be between {0} and {1} characters long!")]
+    [StringLength(TODO_ITEM_NAME_MAX_LENGTH, MinimumLength = TODO_ITEM_NAME_MIN_LENGTH, ErrorMessage = "Todo must be between {0} and {1} characters long!")]
     public string Name { get; set; } = null!;
 }

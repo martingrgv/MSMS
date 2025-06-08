@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using MSMS.Core.Contracts;
 using MSMS.Core.Profiles;
@@ -24,14 +23,16 @@ namespace MSMS.Web.Extensions
             return serviceCollection;
         }
 
-        public static IServiceCollection AddDbContext(this IServiceCollection serviceCollection, IConfiguration configuration)
+        public static IServiceCollection AddPersistance(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
-            string connectionString = configuration.GetConnectionString("MSMSConnectionString") ?? throw new InvalidOperationException("Could not find connection string!");
+            string connectionString = configuration["ConnectionStrings:DefaultConnection"]!;
+
             serviceCollection.AddDbContext<MSMSDbContext>(options =>
             {
                 options.UseSqlServer(connectionString,
                     b => b.MigrationsAssembly("MSMS.Infrastructure"));
             });
+
             serviceCollection.AddDatabaseDeveloperPageExceptionFilter();
 
             return serviceCollection;
@@ -57,7 +58,7 @@ namespace MSMS.Web.Extensions
 
         public static IServiceCollection ConfigureRoleClaim(this IServiceCollection serviceCollection)
         {
-            serviceCollection.Configure<IdentityOptions>(options => 
+            serviceCollection.Configure<IdentityOptions>(options =>
             {
                 options.ClaimsIdentity.RoleClaimType = ClaimTypes.Role;
             });

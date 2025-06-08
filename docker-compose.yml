@@ -1,0 +1,41 @@
+version: '3.9'
+
+services:
+  msms_web:
+    image: ${DOCKER_REGISTRY-}msms_web
+    build:
+      context: .
+      dockerfile: MSMS.Web/Dockerfile
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=msms_db;Database=MSMSDb;User=sa;Password=MsmsWeb12345;TrustServerCertificate=True
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ConnectionStrings__CatalogDb=Server=catalogdb;Port=5432;Database=CatalogDb;User Id=postgres;Password=postgres;Include Error Detail=true
+      - Kestrel__EndPoints__WebApi__Protocols=Http1
+      - Kestrel__EndPoints__WebApi__Url=http://+:8080
+    depends_on:
+      - msms_db
+    ports:
+      - 5000:8080
+      - 5001:8081
+    networks:
+      - minecraft_network
+
+  msms_db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      SA_PASSWORD: "MsmsWeb12345"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - minecraft_data:/var/opt/mssql
+    networks:
+      - minecraft_network
+
+volumes:
+  minecraft_data:
+
+networks:
+  minecraft_network:
