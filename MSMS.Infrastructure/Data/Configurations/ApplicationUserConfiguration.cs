@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MSMS.Infrastructure.Data.Models;
-using MSMS.Infrastructure.Data.Seeder;
 using static MSMS.Infrastructure.Constants.ValidationConstants;
 
 namespace MSMS.Infrastructure.Data.Configurations
@@ -10,14 +9,30 @@ namespace MSMS.Infrastructure.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<ApplicationUser> builder)
         {
-            builder.Property(x => x.UserName).HasMaxLength(USERNAME_MAX_LENGTH);
-            builder.Property(x => x.UserName).IsRequired();
-            builder.Property(x => x.NormalizedUserName).HasMaxLength(USERNAME_MAX_LENGTH);
-            builder.Property(x => x.Email).IsRequired();
-            builder.Property(x => x.PasswordHash).IsRequired();
+            builder.HasKey(x => x.Id);
 
-            var seeder = new DbSeeder();
-            builder.HasData(new ApplicationUser [] { seeder.GuestUser, seeder.CreatorUser });
+            builder.Property(x => x.UserName)
+                .HasMaxLength(USERNAME_MAX_LENGTH)
+                .IsRequired();
+
+            builder.Property(x => x.NormalizedUserName)
+                .HasMaxLength(USERNAME_MAX_LENGTH)
+                .IsRequired();
+
+            builder.Property(x => x.FirstName)
+                .HasMaxLength(FIRSTNAME_MAX_LENGTH)
+                .IsRequired();
+
+            builder.Property(x => x.LastName)
+                .HasMaxLength(LASTNAME_MAX_LENGTH)
+                .IsRequired();
+
+            builder.Property(x => x.Email)
+                .HasMaxLength(256)
+                .IsRequired();
+
+            builder.Property(x => x.PasswordHash)
+                .IsRequired();
         }
     }
 }

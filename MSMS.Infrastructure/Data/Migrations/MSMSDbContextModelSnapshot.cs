@@ -4,19 +4,16 @@ using MSMS.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace MSMS.Infrastructure.Migrations
+namespace MSMS.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(MSMSDbContext))]
-    [Migration("20241203200948_TodoListNameRemove")]
-    partial class TodoListNameRemove
+    partial class MSMSDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,14 +45,12 @@ namespace MSMS.Infrastructure.Migrations
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasComment("User's first name");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasComment("User's last name");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -68,8 +63,9 @@ namespace MSMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)");
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
@@ -89,8 +85,8 @@ namespace MSMS.Infrastructure.Migrations
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
@@ -99,48 +95,9 @@ namespace MSMS.Infrastructure.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "091a0932-5bea-4155-9ad1-db73e28aa455",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "f6288136-62a1-4311-84db-7ad9f5c9e5e9",
-                            Email = "guest@mail.com",
-                            EmailConfirmed = false,
-                            FirstName = "Madman",
-                            LastName = "Waller",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "GUEST@MAIL.COM",
-                            NormalizedUserName = "GUEST",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBeon0fhpOl7bYHQFOUVTsUUEiTo0lpyfHbVCAmwex3qiXJrUDs5Ni0KdqqZ6FJUyg==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "61716790-4c17-4fe9-8b8d-c4ab9b1cb18d",
-                            TwoFactorEnabled = false,
-                            UserName = "guest"
-                        },
-                        new
-                        {
-                            Id = "13c6c731-7d69-4db3-a3c8-1d0b77f2d26a",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "a628427a-2a45-4e69-9121-84ac4b0dd412",
-                            Email = "creator@mail.com",
-                            EmailConfirmed = false,
-                            FirstName = "Willson",
-                            LastName = "Smith",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "CREATOR@MAIL.COM",
-                            NormalizedUserName = "CREATOR",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHBGjv4+fHzAQWZh2HVtsPKRAxYoqrZ2y/p7V4foRn1lHbjrNdtXlJ5FktaadcXoKA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "3ab91edc-a115-4d40-b95c-0f5e79c6becf",
-                            TwoFactorEnabled = false,
-                            UserName = "creator"
-                        });
                 });
 
             modelBuilder.Entity("MSMS.Infrastructure.Data.Models.Location", b =>
@@ -151,8 +108,9 @@ namespace MSMS.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AccessModifier")
-                        .HasColumnType("int");
+                    b.Property<string>("AccessModifier")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Coordinates")
                         .IsRequired()
@@ -167,15 +125,16 @@ namespace MSMS.Infrastructure.Migrations
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
 
-                    b.Property<int>("LocationType")
-                        .HasColumnType("int");
+                    b.Property<string>("LocationType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("WorldId")
+                    b.Property<int>("WorldId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -185,41 +144,6 @@ namespace MSMS.Infrastructure.Migrations
                     b.HasIndex("WorldId");
 
                     b.ToTable("Locations");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AccessModifier = 0,
-                            Coordinates = "0/0/0",
-                            CreatorId = "13c6c731-7d69-4db3-a3c8-1d0b77f2d26a",
-                            Description = "My first home",
-                            LocationType = 0,
-                            Name = "My Overworld Location",
-                            WorldId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AccessModifier = 1,
-                            Coordinates = "250/250/250",
-                            CreatorId = "13c6c731-7d69-4db3-a3c8-1d0b77f2d26a",
-                            Description = "Portal to home",
-                            LocationType = 3,
-                            Name = "My Nether Location",
-                            WorldId = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            AccessModifier = 0,
-                            Coordinates = "-100/-100/-100",
-                            CreatorId = "13c6c731-7d69-4db3-a3c8-1d0b77f2d26a",
-                            Description = "Enderman farm",
-                            LocationType = 5,
-                            Name = "My End Location",
-                            WorldId = 3
-                        });
                 });
 
             modelBuilder.Entity("MSMS.Infrastructure.Data.Models.Server", b =>
@@ -257,27 +181,15 @@ namespace MSMS.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("PlayMode")
-                        .HasColumnType("int");
+                    b.Property<string>("PlayMode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("OwnerId");
 
                     b.ToTable("Servers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "This is my first created server!",
-                            GameVersion = "1.20.2",
-                            ImagePath = "/images/server-banners/default.jpeg",
-                            IpAddress = "myserver.mcserver.com",
-                            Name = "My Server",
-                            OwnerId = "13c6c731-7d69-4db3-a3c8-1d0b77f2d26a",
-                            PlayMode = 0
-                        });
                 });
 
             modelBuilder.Entity("MSMS.Infrastructure.Data.Models.TodoItem", b =>
@@ -289,12 +201,14 @@ namespace MSMS.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("IsCompleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
 
                     b.Property<int>("TodoListId")
                         .HasColumnType("int");
@@ -343,37 +257,15 @@ namespace MSMS.Infrastructure.Migrations
                     b.Property<int>("ServerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("WorldType")
-                        .HasColumnType("int");
+                    b.Property<string>("WorldType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ServerId");
 
                     b.ToTable("World");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ImagePath = "/images/servers/default/overworld.jpg",
-                            ServerId = 1,
-                            WorldType = 0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ImagePath = "/images/servers/default/nether.jpg",
-                            ServerId = 1,
-                            WorldType = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ImagePath = "/images/servers/default/end.jpg",
-                            ServerId = 1,
-                            WorldType = 2
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -516,7 +408,7 @@ namespace MSMS.Infrastructure.Migrations
             modelBuilder.Entity("MSMS.Infrastructure.Data.Models.Location", b =>
                 {
                     b.HasOne("MSMS.Infrastructure.Data.Models.ApplicationUser", "Creator")
-                        .WithMany()
+                        .WithMany("Locations")
                         .HasForeignKey("CreatorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -524,7 +416,8 @@ namespace MSMS.Infrastructure.Migrations
                     b.HasOne("MSMS.Infrastructure.Data.Models.World", "World")
                         .WithMany("Locations")
                         .HasForeignKey("WorldId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Creator");
 
@@ -534,9 +427,9 @@ namespace MSMS.Infrastructure.Migrations
             modelBuilder.Entity("MSMS.Infrastructure.Data.Models.Server", b =>
                 {
                     b.HasOne("MSMS.Infrastructure.Data.Models.ApplicationUser", "Owner")
-                        .WithMany()
+                        .WithMany("Servers")
                         .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Owner");
@@ -556,7 +449,7 @@ namespace MSMS.Infrastructure.Migrations
             modelBuilder.Entity("MSMS.Infrastructure.Data.Models.TodoList", b =>
                 {
                     b.HasOne("MSMS.Infrastructure.Data.Models.ApplicationUser", "Creator")
-                        .WithMany()
+                        .WithMany("TodoLists")
                         .HasForeignKey("CreatorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -624,6 +517,15 @@ namespace MSMS.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MSMS.Infrastructure.Data.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("Locations");
+
+                    b.Navigation("Servers");
+
+                    b.Navigation("TodoLists");
                 });
 
             modelBuilder.Entity("MSMS.Infrastructure.Data.Models.Server", b =>

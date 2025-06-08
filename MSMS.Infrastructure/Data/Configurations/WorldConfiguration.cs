@@ -1,8 +1,7 @@
-using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using MSMS.Infrastructure.Data.Enums;
 using MSMS.Infrastructure.Data.Models;
-using MSMS.Infrastructure.Data.Seeder;
 
 namespace MSMS.Infrastructure.Data.Configurations
 {
@@ -10,8 +9,20 @@ namespace MSMS.Infrastructure.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<World> builder)
         {
-            var seeder = new DbSeeder();
-            builder.HasData(new World[] { seeder.CreatorOverworld, seeder.CreatorNether, seeder.CreatorEnd });
+            builder.HasKey(x => x.Id);
+
+            builder.Property(x => x.ImagePath);
+
+            builder.Property(x => x.Seed);
+
+            builder.Property(x => x.WorldType)
+                .HasConversion(
+                    x => x.ToString(),
+                    dbx => Enum.Parse<WorldType>(dbx));
+
+            builder.HasOne(x => x.Server)
+                .WithMany(x => x.Worlds)
+                .HasForeignKey(x => x.ServerId);
         }
     }
 }

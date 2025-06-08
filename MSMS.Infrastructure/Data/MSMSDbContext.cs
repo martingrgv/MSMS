@@ -1,15 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using MSMS.Infrastructure.Data.Configurations;
 using MSMS.Infrastructure.Data.Models;
 
 namespace MSMS.Infrastructure.Data
 {
-    public class MSMSDbContext : IdentityDbContext<ApplicationUser>
+    public class MSMSDbContext(DbContextOptions options) : IdentityDbContext<ApplicationUser>(options)
     {
-        public MSMSDbContext(DbContextOptions options) : base(options) { }
-
         public DbSet<Server> Servers { get; set; } = null!;
         public DbSet<World> World { get; set; } = null!;
         public DbSet<Location> Locations { get; set; } = null!;
@@ -18,12 +14,9 @@ namespace MSMS.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
+            builder.ApplyConfigurationsFromAssembly(typeof(MSMSDbContext).Assembly);
 
-            builder.ApplyConfiguration(new ApplicationUserConfiguration());
-            builder.ApplyConfiguration(new ServerConfiguration());
-            builder.ApplyConfiguration(new WorldConfiguration());
-            builder.ApplyConfiguration(new LocationConfiguration());
+            base.OnModelCreating(builder);
         }
     }
 }
