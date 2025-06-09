@@ -18,7 +18,7 @@ namespace MSMS.Infrastructure.Data.Models
 
         public World(WorldType worldType)
         {
-            if (!_typeImageLocations.TryGetValue(WorldType, out var imagePath))
+            if (!_typeImageLocations.TryGetValue(worldType, out var imagePath))
             {
                 throw new ArgumentException("Invalid world type!");
             }
