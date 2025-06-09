@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using MSMS.Core.Contracts;
@@ -11,8 +10,8 @@ namespace MSMS.Core.Services
 {
     public class ServerService : IServerService
     {
-        private IRepository _repository;
-        private IMapper _mapper;
+        private readonly IRepository _repository;
+        private readonly IMapper _mapper;
 
         public ServerService(IRepository repository, IMapper mapper)
         {
@@ -77,17 +76,12 @@ namespace MSMS.Core.Services
 
         public async Task CreateServerAsync(ServerFormModel model, string serverImagePath, string ownerId)
         {
-            Server entity = _mapper.Map<Server>(model);
-            entity.ImagePath = serverImagePath;
-            entity.OwnerId = ownerId;
-            entity.Worlds =
-            [
-                new World(WorldType.Overworld),
-                new World(WorldType.Nether),
-                new World(WorldType.End)
-            ];
+            Server server = _mapper.Map<Server>(model);
+            server.ImagePath = serverImagePath;
+            server.OwnerId = ownerId;
+            server.Worlds = CreateWorlds();
 
-            await _repository.AddAsync(entity);
+            await _repository.AddAsync(server);
             await _repository.SaveChangesAsync();
         }
 
@@ -194,5 +188,12 @@ namespace MSMS.Core.Services
         {
             return await _repository.AllReadOnly<Server>().FirstOrDefaultAsync(s => s.Id == serverId && s.OwnerId == ownerId) != null;
         }
+
+        private static World[] CreateWorlds()
+            => [
+                new World(WorldType.Overworld),
+                new World(WorldType.Nether),
+                new World(WorldType.End)
+            ];
     }
 }
