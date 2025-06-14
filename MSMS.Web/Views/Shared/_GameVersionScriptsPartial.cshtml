@@ -1,0 +1,18 @@
+<script>
+    fetch("https://mc-versions-api.net/api/java")
+        .then((response) => response.json())
+        .then((data) => {
+            const select = document.getElementById('game-version-select');
+            let versions = data.result;
+
+            versions.forEach((version) => {
+                const option = document.createElement('option');
+                option.value = version;
+                option.textContent = version;
+                select.appendChild(option);
+            })
+        })
+        .catch ((ex) => {
+            console.error("Exception occured", ex.error)
+        })
+</script>
