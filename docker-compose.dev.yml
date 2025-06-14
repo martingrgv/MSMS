@@ -22,8 +22,8 @@ services:
     ports:
       - 1433:1433
     volumes:
-      - minecraft_dev_data:/var/opt/mssql
+      - msms_dev_data:/var/opt/mssql
     restart: "no"
 
 volumes:
-  minecraft_dev_data:
+  msms_dev_data:

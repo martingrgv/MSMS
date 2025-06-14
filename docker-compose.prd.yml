@@ -9,6 +9,8 @@ services:
     restart: "unless-stopped"
     depends_on:
       - msms_db
+    volumes:
+      - msms_images:/app/wwwroot/images
     tty: true
 
   msms_db:
@@ -20,7 +22,7 @@ services:
     ports:
       - 1433:1433
     volumes:
-      - minecraft_prd_data:/var/opt/mssql
+      - msms_prd_data:/var/opt/mssql
 
   nginx:
     image: nginx:alpine
@@ -34,4 +36,5 @@ services:
       - msms_web
 
 volumes:
-  minecraft_prd_data:
+  msms_images:
+  msms_prd_data:
