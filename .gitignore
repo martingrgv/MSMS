@@ -405,3 +405,5 @@ MSMS.Web/wwwroot/images/server-banners/
 
 # Docker
 .env.prd
+docker-compose.prd.yml
+nginx/
