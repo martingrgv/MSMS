@@ -1,13 +1,10 @@
-version: '3.9'
-
 services:
   msms_web:
-    build:
-      context: .
-      dockerfile: MSMS.Web/Dockerfile.dev
+    container_name: msms_web_dev
     environment:
-      - ConnectionStrings__DefaultConnection=Server=msms_db;Database=MSMSDb;User=sa;Password=DevPassword123!;TrustServerCertificate=True
+      - ConnectionStrings__DefaultConnection=Server=${DATABASE_SERVER};Database=${DATABASE_NAME};User=${DATABASE_USER};Password=${DATABASE_PASSWORD};TrustServerCertificate=True
       - ASPNETCORE_ENVIRONMENT=Development
+    restart: "no"
     depends_on:
       - msms_db
     ports:
@@ -15,16 +12,15 @@ services:
       - 5051:8081
     volumes:
       - .:/src
-    restart: "no"
-    stdin_open: true
     tty: true
 
   msms_db:
+    container_name: msms_db_dev
     environment:
-      SA_PASSWORD: DevPassword123!
-      ACCEPT_EULA: "Y"
+      - MSSQL_SA_PASSWORD=${DATABASE_PASSWORD}
+      - ACCEPT_EULA=Y
     ports:
-      - "1433:1433"
+      - 1433:1433
     volumes:
       - minecraft_dev_data:/var/opt/mssql
     restart: "no"

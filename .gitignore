@@ -402,3 +402,6 @@ MSMS.Web/wwwroot/images/server-banners/
 
 # VSCode
 .vscode/
+
+# Docker
+.env.prd
