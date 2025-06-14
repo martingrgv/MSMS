@@ -16,7 +16,7 @@ namespace MSMS.Web
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
-            app.ApplyMigrations();
+            app.ApplyMigrations(app.Logger);
 
             if (app.Environment.IsDevelopment())
             {

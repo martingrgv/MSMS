@@ -1,3 +1,4 @@
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using MSMS.Infrastructure.Data;
 using MSMS.Infrastructure.Data.Enums;
@@ -33,13 +34,20 @@ public static class ApplicationBuilderExtension
         return app;
     }
 
-    public static IApplicationBuilder ApplyMigrations(this IApplicationBuilder app)
+    public static IApplicationBuilder ApplyMigrations(this IApplicationBuilder app, ILogger logger)
     {
         using (var scope = app.ApplicationServices.CreateScope())
         {
             using var dbContext = scope.ServiceProvider.GetRequiredService<MSMSDbContext>();
 
-            dbContext.Database.Migrate();
+            try
+            {
+                dbContext.Database.Migrate();
+            }
+            catch (SqlException ex)
+            {
+                logger.LogError("Exception occured upon migrating!", ex);
+            }
         }
 
         return app;
