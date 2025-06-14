@@ -18,24 +18,7 @@
             <span asp-validation-for="@Model.IpAddress" class="text-danger"></span>
         </di>
         <div class="form-group">
-            <select asp-for="@Model.GameVersion" class="form-control">
-                @for (var major = 1; major >= 1; major--)
-                {
-                    var minorStart = major == 1 ? 21 : 0;
-                    var minorEnd = major == 1 ? 0 : 0;
-
-                    for (var minor = minorStart; minor >= minorEnd; minor--)
-                    {
-                        var patchStart = (major == 1 && minor == 21) ? 0 : 2;
-                        var patchEnd = minor == 0 ? 0 : 0;
-
-                        for (var patch = patchStart; patch >= patchEnd; patch--)
-                        {
-                            <option value="@($"{major}.{minor}.{patch}")">@($"{major}.{minor}.{patch}")</option>
-                        }
-                    }
-                }
-            </select>
+            <select id="game-version-select" asp-for="@Model.GameVersion" class="form-control"></select>
         </div>
         <div class="form-group">
             <select asp-for="@Model.PlayMode" asp-items="Html.GetEnumSelectList<MSMS.Infrastructure.Data.Enums.PlayMode>()" class="form-control" aria-placeholder="SELECT PLAY MODE"></select>
@@ -53,6 +36,5 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <partial name="_GameVersionScriptsPartial" />
 }
-
-
