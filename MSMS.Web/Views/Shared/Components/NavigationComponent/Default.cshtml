@@ -10,9 +10,12 @@
                 <li class="nav-item">
                     <a class="nav-link" asp-area="" asp-controller="Server" asp-action="All">SERVERS</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="Todo" asp-action="Mine">TODO</a>
-                </li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Todo" asp-action="Mine">TODO</a>
+                    </li>
+                }
                 <li class="nav-item">
                     <a class="nav-link" asp-area="" asp-controller="PortalTool" asp-action="Tool">PORTAL TOOL</a>
                 </li>
