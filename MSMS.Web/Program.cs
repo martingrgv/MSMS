@@ -1,5 +1,7 @@
 using MSMS.Web.Extensions;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using HealthChecks.UI.Client;
 
 namespace MSMS.Web
 {
@@ -11,6 +13,10 @@ namespace MSMS.Web
 
             builder.Services.AddServices();
             builder.Services.AddPersistance(builder.Configuration);
+
+            builder.Services.AddHealthChecks()
+                .AddSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]!);
+
             builder.Services.AddIdentity();
             builder.Services.ConfigureRoleClaim();
             builder.Services.AddControllersWithViews();
@@ -31,6 +37,11 @@ namespace MSMS.Web
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.MapHealthChecks("/health", new HealthCheckOptions
+            {
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            });
 
             app.UseRouting();
 
