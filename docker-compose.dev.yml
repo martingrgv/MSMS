@@ -1,8 +1,12 @@
 services:
   msms_web:
+    image: ${DOCKER_REGISTRY-}msms_web_dev
+    build:
+      context: .
+      dockerfile: MSMS.Web/Dockerfile.dev
     container_name: msms_web_dev
     environment:
-      - ConnectionStrings__DefaultConnection=Server=${DATABASE_SERVER};Database=${DATABASE_NAME};User=${DATABASE_USER};Password=${DATABASE_PASSWORD};TrustServerCertificate=True
+      - ConnectionStrings__DefaultConnection=Server=msms_db_dev;Database=MSMSDb;User=sa;Password=DevPassword123!;TrustServerCertificate=True
       - ASPNETCORE_ENVIRONMENT=Development
     restart: "no"
     depends_on:
@@ -17,7 +21,7 @@ services:
   msms_db:
     container_name: msms_db_dev
     environment:
-      - MSSQL_SA_PASSWORD=${DATABASE_PASSWORD}
+      - MSSQL_SA_PASSWORD=DevPassword123!
       - ACCEPT_EULA=Y
     ports:
       - 1434:1433
