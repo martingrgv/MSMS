@@ -15,7 +15,7 @@ namespace MSMS.Web.Areas.Manager.Controllers
     {
         private readonly IServerService _serverService;
         private readonly IStatisticsService _statisticsService;
-        private readonly IMapper _mapper; 
+        private readonly IMapper _mapper;
 
         public PanelController(IServerService serverService, IStatisticsService statisticsService, IMapper mapper)
         {
@@ -38,7 +38,7 @@ namespace MSMS.Web.Areas.Manager.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Servers([FromQuery]AllServersQueryModel query)
+        public async Task<IActionResult> Servers([FromQuery] AllServersQueryModel query)
         {
             var model = await _serverService.AllServersAsync(
                 User.Id(),
@@ -66,11 +66,17 @@ namespace MSMS.Web.Areas.Manager.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit([FromForm] ServerEditModel model)
+        public async Task<IActionResult> Edit([FromForm] ServerEditModel model, IFormFile? serverImage)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
+            }
+
+            if (serverImage != null)
+            {
+                using var stream = serverImage.OpenReadStream();
+                await _serverService.UploadServerBannerAsync(model.Id, stream, serverImage.FileName);
             }
 
             await _serverService.EditServer(model);
@@ -78,7 +84,7 @@ namespace MSMS.Web.Areas.Manager.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete([FromForm]int id)
+        public async Task<IActionResult> Delete([FromForm] int id)
         {
             await _serverService.DeleteServer(id);
             return RedirectToAction(nameof(Servers));

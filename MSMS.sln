@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSMS.Core", "MSMS.Core\MSMS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSMS.Infrastructure", "MSMS.Infrastructure\MSMS.Infrastructure.csproj", "{A350C91D-A885-4A16-B44B-764D2111D16A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSMS.Tests", "MSMS.Tests\MSMS.Tests.csproj", "{EA15A37F-63A6-4EAD-8EC2-BEFA4E65333A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{A350C91D-A885-4A16-B44B-764D2111D16A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A350C91D-A885-4A16-B44B-764D2111D16A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A350C91D-A885-4A16-B44B-764D2111D16A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA15A37F-63A6-4EAD-8EC2-BEFA4E65333A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA15A37F-63A6-4EAD-8EC2-BEFA4E65333A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA15A37F-63A6-4EAD-8EC2-BEFA4E65333A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA15A37F-63A6-4EAD-8EC2-BEFA4E65333A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
