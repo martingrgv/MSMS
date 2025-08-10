@@ -10,6 +10,13 @@ namespace MSMS.Core.Services
 {
     public class ServerService : IServerService
     {
+        private readonly string DefaultServerImagePath = Path.Combine(
+                Directory.GetCurrentDirectory(),
+                "wwwroot",
+                "images",
+                "server-banners",
+                "default.jpeg");
+
         private readonly IRepository _repository;
         private readonly IMapper _mapper;
 
@@ -195,5 +202,28 @@ namespace MSMS.Core.Services
                 new World(WorldType.Nether),
                 new World(WorldType.End)
             ];
+
+        public async Task UploadServerBannerAsync(int serverId, Stream serverImageStream, string fileName)
+        {
+            var server = await _repository.GetByIdAsync<Server>(serverId);
+
+            if (server is not null)
+            {
+
+                if (server.ImagePath == DefaultServerImagePath)
+                {
+                    var defaultImageDir = Path.GetDirectoryName(server.ImagePath);
+                    server.ImagePath = Path.Combine(defaultImageDir, Guid.NewGuid().ToString() + Path.GetExtension(fileName));
+                }
+
+                using var currentBannerStream = new FileStream(server.ImagePath, FileMode.Create, FileAccess.Write);
+                await serverImageStream.CopyToAsync(currentBannerStream);
+                await _repository.SaveChangesAsync();
+            }
+            else
+            {
+                throw new InvalidOperationException("Server does not exist!");
+            }
+        }
     }
 }
