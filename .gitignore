@@ -391,11 +391,3 @@ FodyWeavers.xsd
 *.sln.iml
 
 MSMS.Web/wwwroot/images/server-banners/
-
-# VSCode
-.vscode/
-
-# Docker
-.env.prd
-docker-compose.prd.yml
-nginx/
