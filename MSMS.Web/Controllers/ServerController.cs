@@ -29,7 +29,7 @@ namespace MSMS.Web.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> All([FromQuery]AllServersQueryModel query)
+        public async Task<IActionResult> All([FromQuery] AllServersQueryModel query)
         {
             var model = await _serverService.AllServersAsync(
                 null,
@@ -60,12 +60,14 @@ namespace MSMS.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = nameof(Role.Owner))]
         public IActionResult Create()
         {
             return View(new ServerFormModel());
         }
 
         [HttpPost]
+        [Authorize(Roles = nameof(Role.Owner))]
         public async Task<IActionResult> Create(ServerFormModel model, IFormFile? serverImage)
         {
             if (!ModelState.IsValid)
@@ -128,7 +130,7 @@ namespace MSMS.Web.Controllers
 
             if (!Enum.TryParse<WorldType>(worldType, true, out var parsedType))
             {
-                return BadRequest();               
+                return BadRequest();
             }
 
             var model = await _serverService.GetServerWorldAsync(id, parsedType);
@@ -153,7 +155,7 @@ namespace MSMS.Web.Controllers
 
             if (!Enum.TryParse<WorldType>(worldType, true, out var parsedType))
             {
-                return BadRequest();               
+                return BadRequest();
             }
 
             var model = new ServerLocationFormModel();
@@ -162,7 +164,8 @@ namespace MSMS.Web.Controllers
 
         [HttpPost]
         [Route("Server/{id}/{worldType}/AddLocation/{worldId}")]
-        public async Task<IActionResult> AddLocation (int id, int worldId, ServerLocationFormModel model)
+        [Authorize(Roles = nameof(Role.Owner))]
+        public async Task<IActionResult> AddLocation(int id, int worldId, ServerLocationFormModel model)
         {
             if (ModelState.IsValid == false)
             {
